@@ -1,0 +1,14 @@
+body {
+    background-color: rgba(0,0,0, 0.75);
+}
+
+.tableContainer {
+    display: flex;
+    justify-content: center;
+    
+    table {
+        color: #5ac84d;
+        background-color: #383838;
+        font-weight: 500;
+    }
+}

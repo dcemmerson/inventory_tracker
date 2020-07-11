@@ -1,0 +1,61 @@
+{
+  "name": "inventory_app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@reach/dialog": "^0.10.5",
+    "@reach/tabs": "^0.10.5",
+    "@reach/visually-hidden": "^0.10.4",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "faunadb": "^2.14.2",
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-netlify-identity": "^0.2.5",
+    "react-netlify-identity-widget": "^0.2.7",
+    "react-scripts": "3.4.1",
+    "sass-loader": "^9.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lambda-serve": "netlify-lambda serve lambda-src",
+    "lambda-build": "netlify-lambda build lambda-src",
+    "dev": "NODE_ENV=development concurrently \"webpack-dev-server --content-base dist/\" \"npm run lambda-serve\"",
+    "build": "NODE_ENV=production webpack && npm run lambda-build",
+    "watch": "webpack --watch"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "proxy": {
+    "/.netlify/functions": {
+      "target": "http://localhost:9000",
+      "pathRewrite": {
+        "^/\\.netlify/functions": ""
+      }
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "dotenv": "^8.2.0",
+    "netlify-lambda": "^1.6.3",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
