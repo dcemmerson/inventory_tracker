@@ -1,5 +1,6 @@
 require('core-js'); // require first!!
 require('regenerator-runtime/runtime');
+require('@netlify/plugin-functions-core');
 
 //import "@reach/tabs/styles.css"
 
