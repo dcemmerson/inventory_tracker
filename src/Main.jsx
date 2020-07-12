@@ -7,7 +7,7 @@ import { Inventory } from "./Inventory.jsx";
 // code split the modal til you need it!
 const IdentityModal = React.lazy(() => import("react-netlify-identity-widget"))
 
-export function Main() {
+export function Main(props) {
   const identity = useIdentityContext()
   const [dialog, setDialog] = React.useState(false)
   const isLoggedIn = identity && identity.isLoggedIn
@@ -24,7 +24,9 @@ export function Main() {
         onCloseDialog={() => setDialog(false)} 
         />
       </React.Suspense>
-      <Inventory />
+      <Inventory
+        inventory={props.inventory}
+      />
     </div>
   )
 }

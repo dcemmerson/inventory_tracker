@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./get_inventory.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./insert_inventory.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7936,10 +7936,10 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 
 /***/ }),
 
-/***/ "./get_inventory.js":
-/*!**************************!*\
-  !*** ./get_inventory.js ***!
-  \**************************/
+/***/ "./insert_inventory.js":
+/*!*****************************!*\
+  !*** ./insert_inventory.js ***!
+  \*****************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -7947,6 +7947,12 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! faunadb */ "../node_modules/faunadb/index.js");
 /* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(faunadb__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 __webpack_require__(/*! dotenv */ "../node_modules/dotenv/lib/main.js").config();
@@ -7960,20 +7966,41 @@ const q = faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.query;
 const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
   secret: process.env.DB_SERVER_KEY
 });
-const query = q.Map(q.Paginate(q.Match(q.Index("get_inventory"))), q.Lambda("X", q.Get(q.Var("X"))));
 
 exports.handler = async function (event, context) {
+  if (event.httpMethod !== 'POST' || !event.body) {
+    return {
+      statusCode,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        msg: 'Invalid submit method.'
+      })
+    };
+  }
+
+  const data = JSON.parse(event.body);
+  const query = q.Create(q.Collection("inventory"), {
+    data: {
+      "id": data.id,
+      "name": data.name,
+      "quantity": data.quantity,
+      "burn_rate": data.burnRate
+    }
+  });
   let results;
 
   try {
     results = await client.query(query);
+    results = _objectSpread(_objectSpread({}, results), {}, {
+      success: true
+    });
   } catch (err) {
     results = err;
   } finally {
     return {
       statusCode,
       headers,
-      //        body: 'hello',
       body: JSON.stringify(results)
     };
   }

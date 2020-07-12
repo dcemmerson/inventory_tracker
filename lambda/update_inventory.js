@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./get_inventory.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./update_inventory.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7936,10 +7936,10 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 
 /***/ }),
 
-/***/ "./get_inventory.js":
-/*!**************************!*\
-  !*** ./get_inventory.js ***!
-  \**************************/
+/***/ "./update_inventory.js":
+/*!*****************************!*\
+  !*** ./update_inventory.js ***!
+  \*****************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -7960,9 +7960,16 @@ const q = faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.query;
 const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
   secret: process.env.DB_SERVER_KEY
 });
-const query = q.Map(q.Paginate(q.Match(q.Index("get_inventory"))), q.Lambda("X", q.Get(q.Var("X"))));
 
 exports.handler = async function (event, context) {
+  const data = JSON.parse(event.body);
+  const query = q.Update(q.Select("ref", q.Get(q.Match(q.Index("inventory_id"), data.id))), {
+    data: {
+      "name": data.name,
+      "quantity": data.quantity,
+      "burn_rate": data.burnRate
+    }
+  });
   let results;
 
   try {
@@ -7973,7 +7980,6 @@ exports.handler = async function (event, context) {
     return {
       statusCode,
       headers,
-      //        body: 'hello',
       body: JSON.stringify(results)
     };
   }

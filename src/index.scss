@@ -5,7 +5,52 @@ body {
 .tableContainer {
     display: flex;
     justify-content: center;
+
+    .sort::after {
+        content: "";
+
+        background-image: url(images/sort.png);
+        background-position: center;
+        background-size: 95%;
+        background-repeat: no-repeat;
+
+        width: 0.85rem;
+        height: 0.85rem;
+        display: inline-block;
+        position: relative;
+
+    }
     
+    .sort--up::after {
+        content: "";
+
+        background-image: url(images/sort--up.png);
+        background-position: center;
+        background-size: 95%;
+        background-repeat: no-repeat;
+
+        width: 0.85rem;
+        height: 0.85rem;
+        display: inline-block;
+        position: relative;
+
+    }
+
+    .sort--down::after {
+        content: "";
+
+        background-image: url(images/sort--down.png);
+        background-position: center;
+        background-size: 95%;
+        background-repeat: no-repeat;
+
+        width: 0.85rem;
+        height: 0.85rem;
+        display: inline-block;
+        position: relative;
+
+    }
+
     table {
         color: #5ac84d;
         background-color: #383838;
