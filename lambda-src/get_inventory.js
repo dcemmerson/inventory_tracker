@@ -1,4 +1,5 @@
 import faunadb from 'faunadb';
+import { tallyInventory } from './tally_inventory';
 
 require('dotenv').config();
 
@@ -26,7 +27,8 @@ exports.handler = async function (event, context) {
     if (user) {
         let results;
         try {
-            results = await client.query(query);
+            results = tallyInventory(await client.query(query));
+//            results = await client.query(query);
         }
         catch (err) {
             results = err;
@@ -35,7 +37,6 @@ exports.handler = async function (event, context) {
             return {
                 statusCode,
                 headers,
-                //        body: 'hello',
                 body: JSON.stringify(results),
             };
         }
@@ -44,7 +45,6 @@ exports.handler = async function (event, context) {
         return {
             statusCode,
             headers,
-            //        body: 'hello',
             body: JSON.stringify({
                 msg: 'not logged in',
                 context: context,

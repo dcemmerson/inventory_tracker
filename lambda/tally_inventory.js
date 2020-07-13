@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./get_inventory.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./tally_inventory.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7933,69 +7933,6 @@ module.exports = Url;
 
 module.exports = __webpack_require__(/*! util */ "util").deprecate;
 
-
-/***/ }),
-
-/***/ "./get_inventory.js":
-/*!**************************!*\
-  !*** ./get_inventory.js ***!
-  \**************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! faunadb */ "../node_modules/faunadb/index.js");
-/* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(faunadb__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _tally_inventory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tally_inventory */ "./tally_inventory.js");
-
-
-
-__webpack_require__(/*! dotenv */ "../node_modules/dotenv/lib/main.js").config();
-
-const statusCode = 200;
-const headers = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "Content-Type"
-};
-const q = faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.query;
-const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
-  secret: process.env.DB_SERVER_KEY
-});
-const query = q.Map(q.Paginate(q.Match(q.Index("get_inventory"))), q.Lambda("X", q.Get(q.Var("X"))));
-
-exports.handler = async function (event, context) {
-  const {
-    identity,
-    user
-  } = context.clientContext;
-
-  if (user) {
-    let results;
-
-    try {
-      results = Object(_tally_inventory__WEBPACK_IMPORTED_MODULE_1__["tallyInventory"])((await client.query(query))); //            results = await client.query(query);
-    } catch (err) {
-      results = err;
-    } finally {
-      return {
-        statusCode,
-        headers,
-        body: JSON.stringify(results)
-      };
-    }
-  } else {
-    return {
-      statusCode,
-      headers,
-      body: JSON.stringify({
-        msg: 'not logged in',
-        context: context,
-        event: event
-      })
-    };
-  }
-};
 
 /***/ }),
 

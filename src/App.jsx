@@ -43,11 +43,12 @@ export default function App(props) {
   }
 
   function normalizeInventoryData(inventory) {
+    console.log('unnormalized inv = ');
+    console.log(inventory);
     if (!inventory.data) {
       return new Error(`No inventory.data: ${inventory.msg}`);
     }
     inventory.data = inventory.data.map(item => {
-      item.data.burnRate = item.data.burn_rate;
       item.data.daysLeft = (item.data.quantity / item.data.burnRate).toFixed(1);
       item.editMode = false;
       return item;
