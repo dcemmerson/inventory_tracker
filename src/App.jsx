@@ -26,6 +26,22 @@ export default function App(props) {
     }
   }, [loggedIn]);
 
+  function handleInventoryInput(itemId, e) {
+    const key = e.target.name;
+    const value = e.target.value;
+    const newInventory = inventory.map(item => {
+      if(item.data.id == itemId) {
+        item.data[key] = value;
+      }
+      return item;
+    });
+    setInventory(newInventory);
+  }
+
+  function handleAddItem() {
+
+  }
+
   function normalizeInventoryData(inventory) {
     if (!inventory.data) {
       return new Error(`No inventory.data: ${inventory.msg}`);
@@ -39,8 +55,7 @@ export default function App(props) {
     return inventory.data;
   }
 
-  function setInventoryEditMode(itemId, editMode=true) {
-    console.log(itemId);
+  function setItemEditMode(itemId, editMode=true) {
     const newInventory = inventory.map(item => {
       if(item.data.id === itemId) {
         item.editMode = true;
@@ -115,9 +130,10 @@ export default function App(props) {
   return (
     <Main
       inventory={inventory}
-      setInventoryEditMode={setInventoryEditMode}
+      setItemEditMode={setItemEditMode}
       setLoggedIn={setLoggedIn}
       loading={loading}
+      handleInventoryInput={handleInventoryInput}
     />
   );
 }

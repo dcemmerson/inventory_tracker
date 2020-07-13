@@ -17,7 +17,8 @@ export function Main(props) {
       />
       <Inventory
         inventory={props.inventory}
-        setInventoryEditMode={props.setInventoryEditMode}
+        setItemEditMode={props.setItemEditMode}
+        handleItemInput={props.handleItemInput}
       />
     </>
   );

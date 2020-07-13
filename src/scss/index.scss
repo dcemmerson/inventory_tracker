@@ -1,0 +1,89 @@
+
+$green: #5ac84d;
+$gray: #383838;
+$offwhite: #f0f0f0;
+body {
+    background-color: rgba(0,0,0, 0.75);
+}
+
+.tableContainer {
+    
+    .sort::after {
+        content: "";
+
+        background-image: url(../images/sort.png);
+        background-position: center;
+        background-size: 95%;
+        background-repeat: no-repeat;
+
+        width: 0.85rem;
+        height: 0.85rem;
+        display: inline-block;
+        position: relative;
+
+    }
+    
+    .sort--up::after {
+        content: "";
+
+        background-image: url(../images/sort--up.png);
+        background-position: center;
+        background-size: 95%;
+        background-repeat: no-repeat;
+
+        width: 0.85rem;
+        height: 0.85rem;
+        display: inline-block;
+        position: relative;
+
+    }
+
+    .sort--down::after {
+        content: "";
+
+        background-image: url(../images/sort--down.png);
+        background-position: center;
+        background-size: 95%;
+        background-repeat: no-repeat;
+
+        width: 0.85rem;
+        height: 0.85rem;
+        display: inline-block;
+        position: relative;
+
+    }
+
+    table {
+        width: 100%;
+        text-align: center;
+        color: $green;
+        background-color: $gray;
+        font-weight: 500;
+
+        input {
+            max-width: 20vw;
+        }
+    }
+
+    .addItemRow {
+        background-image: url(../images/plus--green.png);
+        background-position: center;
+        background-size: 95%;
+        background-repeat: no-repeat;
+
+        width: 0.85rem;
+        height: 0.85rem;
+        display: inline-block;
+        position: relative;
+    }
+    .btn--cancel,.btn--save {
+        color: $offwhite;
+        font-weight: 500;
+    }
+    .btn--cancel:hover, .btn--save:hover {
+        background-color: $gray;
+    }
+    .btn--cancel:focus, .btn--save:focus {
+        border: 0.2rem solid $green;
+    }
+}

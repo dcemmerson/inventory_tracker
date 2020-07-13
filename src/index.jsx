@@ -2,7 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { IdentityContextProvider } from "react-netlify-identity-widget"
 
-import './index.scss';
+import './images/plus--green.png';
+import './images/sort--down.png';
+import './images/sort--up.png';
+import './images/sort.png';
+ 
+
+import './scss/index.scss';
 import App from './App.jsx';
 //import * as serviceWorker from './serviceWorker';
 
