@@ -1,13 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { IdentityContextProvider } from "react-netlify-identity-widget"
 
 import './index.scss';
 import App from './App.jsx';
 //import * as serviceWorker from './serviceWorker';
 
+const URL = 'https://skyeparker.netlify.app/'
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <IdentityContextProvider url={URL} >
+      <App />
+    </IdentityContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -19,20 +19,37 @@ const query = q.Map(
     ),
     q.Lambda("X", q.Get(q.Var("X")))
 )
+
 exports.handler = async function (event, context) {
-    let results;
-    try {
-        results = await client.query(query);
+
+    const { identity, user } = context.clientContext;
+    if (user) {
+        let results;
+        try {
+            results = await client.query(query);
+        }
+        catch (err) {
+            results = err;
+        }
+        finally {
+            return {
+                statusCode,
+                headers,
+                //        body: 'hello',
+                body: JSON.stringify(results),
+            };
+        }
     }
-    catch (err) {
-        results = err;
-    }
-    finally {
+    else {
         return {
             statusCode,
             headers,
             //        body: 'hello',
-            body: JSON.stringify(results),
+            body: JSON.stringify({
+                msg: 'not logged in',
+                context: context,
+                event: event,
+            }),
         };
     }
 }

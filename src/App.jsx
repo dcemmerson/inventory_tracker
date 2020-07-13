@@ -1,54 +1,82 @@
-import React from 'react';
-import { IdentityContextProvider } from "react-netlify-identity-widget"
+import React, { useState, useEffect } from 'react';
+import { useIdentityContext } from "react-netlify-identity-widget";
 
 import { Main } from './Main.jsx';
 
 //import logo from './logo.svg';
 import './App.css';
 
-const url = 'https://wizardly-mayer-95e84a.netlify.app'
 
-export default class App extends React.Component {
+export default function App(props) {
+  const identity = useIdentityContext()
+  const [inventory, setInventory] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(identity && identity.isLoggedIn);
+  const [loading, setLoading] = useState(true);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      inventory: [],
+  useEffect(() => {
+    if (loggedIn) {
+      getInventory(identity.user.token.access_token)
+        .then(inventory => {
+          console.log(inventory);
+          setInventory(inventory);
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
-  }
+  }, [loggedIn]);
 
-  async componentDidMount() {
-    const inventory = await this.getInventory();
-    console.log(inventory);
-    this.setState({ inventory: inventory });
-  }
-
-  normalizeInventoryData(inventory) {
-    console.log(inventory);
+  function normalizeInventoryData(inventory) {
+    if (!inventory.data) {
+      return new Error(`No inventory.data: ${inventory.msg}`);
+    }
     inventory.data = inventory.data.map(item => {
       item.data.burnRate = item.data.burn_rate;
       item.data.daysLeft = (item.data.quantity / item.data.burnRate).toFixed(1);
+      item.editMode = false;
       return item;
     })
-    return inventory;
+    return inventory.data;
   }
 
-  getInventory() {
-    return fetch(`/.netlify/functions/get_inventory`, {
-      method: 'GET',
-    })
-      .then(inventoryDb => {
-        console.log(inventoryDb);
-        return inventoryDb;
+  function setInventoryEditMode(itemId, editMode=true) {
+    console.log(itemId);
+    const newInventory = inventory.map(item => {
+      if(item.data.id === itemId) {
+        item.editMode = true;
+      }
+      return item;
+    });
+    setInventory(newInventory);
+  }
+  function getInventory(token) {
+    if (loggedIn) {
+      return fetch(`/.netlify/functions/get_inventory`, {
+        method: 'GET',
+        credentials: "include",
+        cache: "no-store",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       })
-      .then(res => res.json())
-      .then(this.normalizeInventoryData)
-      .then(normalizedInventory => {
-        return normalizedInventory.data.sort(byBurnRate);
-      })
+        .then(res => res.json())
+        .then(normalizeInventoryData)
+        .then(normalizedInventory => {
+          console.log('normainv = ');
+          console.log(normalizedInventory);
+
+          return normalizedInventory.sort(byBurnRate);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    else {
+      return [];
+    }
   }
 
-  insertInventory(id, name = "testName", quantity = 12, burnRate = 2) {
+  function insertInventory(id, name = "testName", quantity = 12, burnRate = 2) {
     return fetch(`/.netlify/functions/insert_inventory`, {
       method: 'POST',
       body: JSON.stringify({
@@ -66,7 +94,7 @@ export default class App extends React.Component {
       .then(results => console.log(results))
   }
 
-  updateInventory(id = 5, name = "anotherTest", quantity = 16, burnRate = 1.5) {
+  function updateInventory(id = 5, name = "anotherTest", quantity = 16, burnRate = 1.5) {
     return fetch(`/.netlify/functions/update_inventory`, {
       method: 'POST',
       body: JSON.stringify({
@@ -84,25 +112,24 @@ export default class App extends React.Component {
       .then(results => console.log(results))
   }
 
-  render() {
-    return (
-      <IdentityContextProvider url={url} >
-        <Main
-          inventory={this.state.inventory}
-        />
-      </IdentityContextProvider>
-    );
-  }
+  return (
+    <Main
+      inventory={inventory}
+      setInventoryEditMode={setInventoryEditMode}
+      setLoggedIn={setLoggedIn}
+      loading={loading}
+    />
+  );
 }
 
 function byQuantity(a, b) {
-  a.data.quantity = parseFloat(a.data.quantity);
-  b.data.quantity = parseFloat(b.data.quantity);
+  a.quantity = parseFloat(a.quantity);
+  b.quantity = parseFloat(b.quantity);
 
-  if(a.data.quantity < b.data.quantity) {
+  if (a.quantity < b.quantity) {
     return -1;
   }
-  else if(a.data.quantity === b.data.quantity) {
+  else if (a.quantity === b.quantity) {
     return 0;
   }
   else {
@@ -111,13 +138,13 @@ function byQuantity(a, b) {
 }
 
 function byDaysLeft(a, b) {
-  a.data.daysLeft = parseFloat(a.data.daysLeft);
-  b.data.daysLeft = parseFloat(b.data.daysLeft);
+  a.daysLeft = parseFloat(a.daysLeft);
+  b.daysLeft = parseFloat(b.daysLeft);
 
-  if(a.data.daysLeft < b.data.daysLeft) {
+  if (a.daysLeft < b.daysLeft) {
     return -1;
   }
-  else if(a.data.daysLeft === b.data.daysLeft) {
+  else if (a.daysLeft === b.daysLeft) {
     return 0;
   }
   else {
@@ -126,13 +153,13 @@ function byDaysLeft(a, b) {
 }
 
 function byBurnRate(a, b) {
-  a.data.burnRate = parseFloat(a.data.burnRate);
-  b.data.burnRate = parseFloat(b.data.burnRate);
+  a.burnRate = parseFloat(a.burnRate);
+  b.burnRate = parseFloat(b.burnRate);
 
-  if(a.data.burnRate < b.data.burnRate) {
+  if (a.burnRate < b.burnRate) {
     return -1;
   }
-  else if(a.data.burnRate === b.data.burnRate) {
+  else if (a.burnRate === b.burnRate) {
     return 0;
   }
   else {
@@ -141,10 +168,10 @@ function byBurnRate(a, b) {
 }
 
 function byName(a, b,) {
-  if(a.data.name < b.data.name) {
+  if (a.name < b.name) {
     return -1;
   }
-  else if(a.data.name === b.data.name) {
+  else if (a.name === b.name) {
     return 0;
   }
   else {

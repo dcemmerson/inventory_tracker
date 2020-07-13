@@ -1,9 +1,12 @@
 import React from 'react';
+import { useIdentityContext } from "react-netlify-identity-widget";
 
 export function Inventory(props) {
+    const identity = useIdentityContext();
+    const isLoggedIn = identity && identity.isLoggedIn
 
     return (
-        <div className="tableContainer">
+        <div className={"tableContainer " + (isLoggedIn ? 'd-flex' : 'd-none')}>
             <table>
                 <thead>
                     <tr>
@@ -16,19 +19,33 @@ export function Inventory(props) {
                 <tbody>
                     {
                         props.inventory.map(item => {
-                            return (
-                                <tr key={item.data.id} >
-                                    <td>{item.data.quantity}</td>
-                                    <td>{item.data.name}</td>
-                                    <td>{item.data.burnRate}</td>
-                                    <td>{item.data.daysLeft}</td>
-                                </tr>
-                            );
+                            if (item.editMode) {
+                                return (
+                                    <tr key={item.data.id} >
+                                        <td><input name="quantity" value={item.data.quantity} /></td>
+                                        <td><input name="name" value={item.data.name} /></td>
+                                        <td><input name="burnRate" value={item.data.burnRate} /></td>
+                                        <td><input name="daysLeft" value={item.data.daysLeft} /></td>
+                                    </tr>
+                                );
+                            }
+                            else {
+                                return (
+                                    <tr key={item.data.id} onClick={() => props.setInventoryEditMode(item.data.id)}>
+                                        <td>{item.data.quantity}</td>
+                                        <td>{item.data.name}</td>
+                                        <td>{item.data.burnRate}</td>
+                                        <td>{item.data.daysLeft}</td>
+                                    </tr>
+                                );
+                            }
                         })
                     }
                 </tbody>
             </table>
         </div>
     );
+
+
 }
 
