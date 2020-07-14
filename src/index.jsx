@@ -8,7 +8,7 @@ import './images/sort--up.png';
 import './images/sort.png';
  
 import "@reach/tabs/styles.css";
-//import './scss/index.scss';
+import './scss/index.scss';
 import App from './App.jsx';
 //import * as serviceWorker from './serviceWorker';
 

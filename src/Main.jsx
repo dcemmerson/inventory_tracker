@@ -37,7 +37,7 @@ export function Main(props) {
         <Login 
           setLoggedIn={props.setLoggedIn}
         />
-        <Inventory
+        {/* <Inventory
           inventory={props.inventory}
           setItemEditMode={props.setItemEditMode}
           handleNumericInput={props.handleNumericInput}
@@ -49,7 +49,7 @@ export function Main(props) {
           addItemRow={props.addItemRow}
           removeItemRow={props.removeItemRow}
           sortItems={props.sortItems}
-        />
+        /> */}
       </>
     );
   }

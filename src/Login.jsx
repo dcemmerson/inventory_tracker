@@ -1,6 +1,6 @@
 import React from 'react';
 
-import "react-netlify-identity-widget/styles.css";
+// import "react-netlify-identity-widget/styles.css";
 import { useIdentityContext } from "react-netlify-identity";
 const IdentityModal = React.lazy(() => import("react-netlify-identity-widget"));
 
