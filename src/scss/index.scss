@@ -23,7 +23,7 @@ body {
                 background-color: rgba(0, 0, 0, 0.75);
                 width: 0%;
                 height: 100%;
-                -webkit-transition: width 0.3s;
+                // -webkit-transition: width 0.3s;
                 transition: width 0.3s;
             }
             table {
@@ -38,7 +38,7 @@ body {
                 }
                 td {
                     padding: 0.25rem;
-                    -webkit-transition: display 1s;
+                    // -webkit-transition: display 1s;
                     transition: display 1s;
                     font-weight: 500;
                 }
@@ -88,7 +88,7 @@ body {
     position: relative;
     left: 0.5rem;
     opacity: 0%;
-    -webkit-transition: opacity 1s;
+    // -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
 .sort--up::after {
@@ -105,7 +105,7 @@ body {
     position: relative;
     left: 0.5rem;
     opacity: 0%;
-    -webkit-transition: opacity 1s;
+    // -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
 .sort--down::after {
@@ -122,7 +122,7 @@ body {
     position: relative;
     left: 0.5rem;
     opacity: 0%;
-    -webkit-transition: opacity 1s;
+    // -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
 .addItemRow::before {
@@ -137,7 +137,7 @@ body {
     display: inline-block;
     position: relative;
     opacity: 0%;
-    -webkit-transition: opacity 1s;
+    // -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
 .deleteItemRow::before {
@@ -153,7 +153,7 @@ body {
     position: absolute;
     margin-top: 0.3rem;
     opacity: 100%;
-    -webkit-transition: opacity 1s;
+    // -webkit-transition: opacity 1s;
     transition: opacity 1s, right 0.5s, left 0.5s;
 }
 @media (max-width: 600px) {
@@ -180,32 +180,32 @@ body {
 .sort:hover {
     cursor: pointer;
     opacity: 50%;
-    -webkit-transition: opacity 0.25s;
+    // -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 .sort--down:hover {
     cursor: pointer;
     opacity: 50%;
-    -webkit-transition: opacity 0.25s;
+    // -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 .sort--up:hover {
     cursor: pointer;
     opacity: 50%;
-    -webkit-transition: opacity 0.25s;
+    // -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 .addItemRow:hover {
     cursor: pointer;
     opacity: 50%;
-    -webkit-transition: opacity 0.25s;
+    // -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 .deleteItemRow:hover::before,
 .deleteItemRowMobile:hover {
     cursor: pointer;
     opacity: 50%;
-    -webkit-transition: opacity 0.25s;
+    // -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 
@@ -229,7 +229,7 @@ body:hover {
     font-weight: 550;
     border: 0.15rem solid $green;
     border-radius: 2.5px;
-    -webkit-transition: background-color 0.5s, color 0.5s;
+    // -webkit-transition: background-color 0.5s, color 0.5s;
     transition: background-color 0.5s, color 0.5s;
 }
 .btn-cust:hover {
