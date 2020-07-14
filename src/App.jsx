@@ -37,6 +37,7 @@ export default function App(props) {
           console.log(err);
         })
     }
+
   }, [loggedIn]);
 
   useEffect(() => {
@@ -66,7 +67,7 @@ export default function App(props) {
     if (charCode >= ASCII_CODE_ZERO && charCode <= ASCII_CODE_NINE) {
       value = parseFloat(e.target.value);
     }
-    else if (charCode !== ASCII_CODE_DECIMAL) {
+    else if (charCode !== ASCII_CODE_DECIMAL && value !== '') {
       return;
     }
 
@@ -137,15 +138,28 @@ export default function App(props) {
   }
 
   function removeItemRow(id) {
-    let newInventory = deepCopy(inventory)
+    let newInventory = deepCopy(inventory);
+    let itemInDb = true;
     newInventory = newInventory.map(item => {
       if (item.data.id === id) {
         item.deleteItem = true;
         item.editMode = false;
+        if (item.newItem) {
+          itemInDb = false;
+        }
       }
       return item;
-    })
-    setInventory(newInventory);
+    });
+
+    if (!itemInDb) {
+      const filteredInventory = newInventory.filter(item => item.data.id === id ? null : item);
+      setInventory(filteredInventory);
+
+    }
+    else {
+      setInventory(newInventory);
+
+    }
 
   }
 

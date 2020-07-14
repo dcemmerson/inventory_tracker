@@ -23,6 +23,14 @@ export function Main(props) {
     );
   }
 
+  function logginView() {
+    return (
+        <Login 
+          setLoggedIn={props.setLoggedIn}
+        />
+    );
+  }
+
   function loadedView() {
     return (
       <>
@@ -45,7 +53,10 @@ export function Main(props) {
       </>
     );
   }
-  if(props.loading) {
+  if(!isLoggedIn) {
+    return logginView();
+  }
+  else if(props.loading) {
     return loadingView();
 
   }

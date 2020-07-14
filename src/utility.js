@@ -1,4 +1,3 @@
-
 /*  name: deepCopy
     description: Perform deep copy of object/array passed in. Should 
                     be used to copy object coming out of db. This method
@@ -19,13 +18,13 @@ export function deepCopy(current) {
 }
 
 export function getSortMethod(sortBy, asc = true) {
-    if(sortBy === "byQuantity") {
+    if (sortBy === "byQuantity") {
         return byQuantity(asc);
     }
-    else if(sortBy === "byDaysLeft") {
+    else if (sortBy === "byDaysLeft") {
         return byDaysLeft(asc);
     }
-    else if(sortBy === "byBurnRate") {
+    else if (sortBy === "byBurnRate") {
         return byBurnRate(asc);
     }
     else {
@@ -97,7 +96,7 @@ function byBurnRate(asc = true) {
 function byName(asc = true) {
     let sortDir = 1;
     if (!asc) sortDir = -1;
-    
+
     return function (a, b) {
         if (a.data.name < b.data.name) {
             return -1 * sortDir;
@@ -115,3 +114,4 @@ function byName(asc = true) {
 export function reverseArray(arr) {
     return arr.slice().reverse();
 }
+
