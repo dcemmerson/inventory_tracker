@@ -37,7 +37,7 @@ export function Main(props) {
         <Login 
           setLoggedIn={props.setLoggedIn}
         />
-        {/* <Inventory
+        <Inventory
           inventory={props.inventory}
           setItemEditMode={props.setItemEditMode}
           handleNumericInput={props.handleNumericInput}
@@ -49,19 +49,19 @@ export function Main(props) {
           addItemRow={props.addItemRow}
           removeItemRow={props.removeItemRow}
           sortItems={props.sortItems}
-        /> */}
+        />
       </>
     );
   }
-  if(!isLoggedIn) {
-    return logginView();
-  }
-  else if(props.loading) {
-    return loadingView();
+  // if(!isLoggedIn) {
+  //   return logginView();
+  // }
+  // else if(props.loading) {
+  //   return loadingView();
 
-  }
-  else {
-    return loadedView();
-  }
-
+  // }
+  // else {
+  //   return loadedView();
+  // }
+return logginView();
 }
