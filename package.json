@@ -20,7 +20,6 @@
     "react-netlify-identity-widget": "^0.2.7",
     "react-scripts": "3.4.1",
     "sass-loader": "^9.0.2",
-    "tinygesture": "^1.1.4",
     "webpack-cli": "^3.3.12"
   },
   "scripts": {

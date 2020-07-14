@@ -4,6 +4,7 @@ import { useIdentityContext } from "react-netlify-identity-widget";
 import { Main } from './Main.jsx';
 import { deepCopy, getSortMethod } from './utility';
 //import logo from './logo.svg';
+
 import './App.css';
 
 const DEFAULT_START_QUANTITY = 10;
