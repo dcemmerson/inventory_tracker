@@ -15,7 +15,7 @@ export function Main(props) {
   function loadingView() {
     return (
       <>
-         <Login 
+        <Login
           setLoggedIn={props.setLoggedIn}
         />
         <LoadMessage />
@@ -25,19 +25,18 @@ export function Main(props) {
 
   function loginView() {
     return (
-      <div> not logged in</div>
-        // <Login 
-        //   setLoggedIn={props.setLoggedIn}
-        // />
+      <Login
+        setLoggedIn={props.setLoggedIn}
+      />
     );
   }
 
   function loadedView() {
     return (
       <>
-        {/* <Login 
+        { <Login 
           setLoggedIn={props.setLoggedIn}
-        /> */}
+        /> }
         <Inventory
           inventory={props.inventory}
           setItemEditMode={props.setItemEditMode}
@@ -54,10 +53,10 @@ export function Main(props) {
       </>
     );
   }
-  if(!isLoggedIn) {
+  if (!isLoggedIn) {
     return loginView();
   }
-  else if(props.loading) {
+  else if (props.loading) {
     return loadingView();
 
   }
