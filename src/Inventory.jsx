@@ -10,7 +10,7 @@ export function Inventory(props) {
 
     return (
         <div className="container-fluid">
-            <div className={"tableContainer " + (isLoggedIn ? 'd-block' : 'd-none')}>
+            <div className={"tableContainer my-5 " + (isLoggedIn ? 'd-block' : 'd-none')}>
                 <div className="row justify-content-center">
                     <div className="col-12 col-lg-10 col-xl-8">
                         <div className="d-flex">
@@ -77,11 +77,11 @@ export function Inventory(props) {
                     <div className="col-12 col-lg-10 col-xl-8">
                         <div className="row justify-content-between">
                             <div role="group" className="btn-group my-3 ml-4">
-                                <button className={"btn btn-sm btn--save mx-2"
+                                <button className={"btn btn-sm btn-cust mx-2"
                                     + (itemInLimbo ? " userActionRequired" : "")
                                     + ((showSaveButton || itemInLimbo) ? " d-block" : " d-none")}
                                     onClick={props.handleSaveEdits}>Save</button>
-                                <button className={"btn btn-sm btn--cancel mx-2"
+                                <button className={"btn btn-sm btn-cust mx-2"
                                     + (itemInLimbo ? " userActionRequired" : "")
                                     + ((showSaveButton || itemInLimbo) ? " d-block" : " d-none")}
                                     onClick={props.handleCancelEdits}>Cancel</button>

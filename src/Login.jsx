@@ -11,9 +11,12 @@ export function Login(props) {
 
   return (
     <>
-      <button className="btn" onClick={() => setDialog(!dialog)}>
-        {isLoggedIn ? "LOG OUT" : "LOG IN"}
-      </button>
+      <div className="div">
+        <button className="btn btn-sm btn-cust" onClick={() => setDialog(!dialog)}>
+          {isLoggedIn ? "LOG OUT" : "LOG IN"}
+        </button>
+      </div>
+
       <React.Suspense fallback="loading...">
         <IdentityModal
           showDialog={dialog}

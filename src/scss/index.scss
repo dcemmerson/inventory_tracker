@@ -60,25 +60,7 @@ body {
             .deletedRow {
                 background-color: $danger;
             }
-            .btn--cancel,
-            .btn--save {
-                color: $green;
-                background-color: rgba(0, 0, 0, 0);
-                font-weight: 550;
-                border: 0.15rem solid $green;
-                border-radius: 2.5px;
-                -webkit-transition: background-color 0.5s, color 0.5s;
-                transition: background-color 0.5s, color 0.5s;
-            }
-            .btn--cancel:hover,
-            .btn--save:hover {
-                background-color: $green;
-                color: $offwhite;
-            }
-            .btn--cancel:focus,
-            .btn--save:focus {
-                border: 0.2rem solid $green;
-            }
+
         }
 
         .spinner-sm {
@@ -241,7 +223,22 @@ body:hover {
         opacity: 100%;
     }
 }
-
+.btn-cust{
+    color: $green;
+    background-color: rgba(0, 0, 0, 0);
+    font-weight: 550;
+    border: 0.15rem solid $green;
+    border-radius: 2.5px;
+    -webkit-transition: background-color 0.5s, color 0.5s;
+    transition: background-color 0.5s, color 0.5s;
+}
+.btn-cust:hover {
+    background-color: $green;
+    color: $offwhite;
+}
+.btn-cust:focus, {
+    border: 0.2rem solid $green;
+}
 .userActionRequired {
     border: 0.15rem solid $danger;
     animation: blinking 3s linear infinite;
