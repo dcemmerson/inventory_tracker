@@ -15,28 +15,29 @@ export function Main(props) {
   function loadingView() {
     return (
       <>
-        <Login 
+        {/* <Login 
           setLoggedIn={props.setLoggedIn}
-        />
+        /> */}
         <LoadMessage />
       </>
     );
   }
 
-  function logginView() {
+  function loginView() {
     return (
-        <Login 
-          setLoggedIn={props.setLoggedIn}
-        />
+      <div> not logged in</div>
+        // <Login 
+        //   setLoggedIn={props.setLoggedIn}
+        // />
     );
   }
 
   function loadedView() {
     return (
       <>
-        <Login 
+        {/* <Login 
           setLoggedIn={props.setLoggedIn}
-        />
+        /> */}
         <Inventory
           inventory={props.inventory}
           setItemEditMode={props.setItemEditMode}
@@ -53,15 +54,15 @@ export function Main(props) {
       </>
     );
   }
-  // if(!isLoggedIn) {
-  //   return logginView();
-  // }
-  // else if(props.loading) {
-  //   return loadingView();
+  if(!isLoggedIn) {
+    return loginView();
+  }
+  else if(props.loading) {
+    return loadingView();
 
-  // }
-  // else {
-  //   return loadedView();
-  // }
-return logginView();
+  }
+  else {
+    return loadedView();
+  }
+
 }
