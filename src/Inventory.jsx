@@ -5,10 +5,8 @@ export function Inventory(props) {
     const identity = useIdentityContext();
     const isLoggedIn = identity && identity.isLoggedIn;
 
-    const filteredInventory = props.inventory.filter(item => !item.deleteItem ? item : null);
-
     let showSaveButton = false;
-
+    let itemInLimbo = false;
 
     return (
         <div className="container-fluid">
@@ -18,22 +16,30 @@ export function Inventory(props) {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Qty<span className="sort"></span></th>
-                                    <th>Name<span className="sort"></span></th>
-                                    <th>Burn Rate<span className="sort"></span></th>
-                                    <th>Days Left<span className="sort"></span></th>
+                                    <th>Qty<span className="sort"
+                                        onClick={() => props.sortItems("byQuantity")}></span></th>
+                                    <th>Name<span className="sort"
+                                        onClick={() => props.sortItems("byName")}></span></th>
+                                    <th>Burn Rate<span className="sort"
+                                        onClick={() => props.sortItems("byBurnRate")}></span></th>
+                                    <th>Days Left<span className="sort"
+                                        onClick={() => props.sortItems("byDaysLeft")}></span></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    filteredInventory.map(item => {
+                                    props.inventory.map(item => {
+                                        if (item.deleteItem) {
+                                            itemInLimbo = true;
+                                        }
                                         if (item.editMode) {
                                             showSaveButton = true;
                                             return (
-                                                <tr key={item.data.id} >
-                                                    <td><input name="quantity" value={item.data.quantity} type="number"
-                                                        onChange={e => props.handleNumericInput(item.data.id, e)}
-                                                    /></td>
+                                                <tr key={item.data.id} className={item.deleteItem ? "deletedRow" : ""}>
+                                                    <td><span className="deleteItemRow" onClick={() => props.removeItemRow(item.data.id)}></span>
+                                                        <input name="quantity" value={item.data.quantity} type="number"
+                                                            onChange={e => props.handleNumericInput(item.data.id, e)}
+                                                        /></td>
                                                     <td><input name="name" value={item.data.name} type="text"
                                                         onChange={e => props.handleStringInput(item.data.id, e)}
                                                     /></td>
@@ -47,7 +53,8 @@ export function Inventory(props) {
                                         }
                                         else {
                                             return (
-                                                <tr key={item.data.id} onClick={() => props.setItemEditMode(item.data.id)}>
+                                                <tr key={item.data.id} className={item.deleteItem ? "deletedRow" : ""}
+                                                    onClick={() => props.setItemEditMode(item.data.id)}>
                                                     <td>{item.data.quantity}</td>
                                                     <td>{item.data.name}</td>
                                                     <td>{item.data.burnRate}</td>
@@ -62,12 +69,18 @@ export function Inventory(props) {
                     </div>
                     <div className="col-12 col-lg-10 col-xl-8">
                         <div className="row justify-content-between">
-                            <div className="btn-group" role="group">
-                                <button className={"btn btn-sm btn--save " + (showSaveButton ? "d-block" : "d-none")} onClick={props.handleSaveEdits}>Save</button>
-                                <button className={"btn btn-sm btn--cancel " + (showSaveButton ? "d-block" : "d-none")} onClick={props.handleCancelEdits}>Cancel</button>
+                            <div role="group" className="btn-group my-3 ml-4">
+                                <button className={"btn btn-sm btn--save mx-2" 
+                                + (itemInLimbo ? " userActionRequired" : "")
+                                + ((showSaveButton || itemInLimbo) ? " d-block" : " d-none")}
+                                onClick={props.handleSaveEdits}>Save</button>
+                                <button className={"btn btn-sm btn--cancel mx-2" 
+                                + (itemInLimbo ? " userActionRequired" : "")
+                                + ((showSaveButton || itemInLimbo) ? " d-block" : " d-none")}
+                                onClick={props.handleCancelEdits}>Cancel</button>
                                 <div className={"spinner-border text-secondary spinner-sm " + (props.loading || props.updating ? "d-block" : "d-none")}></div>
                             </div>
-                            <div className="addItemRow mr-4 mt-2" onClick={props.addItemRow}></div>
+                            <div className="addItemRow mr-4 mt-" onClick={props.addItemRow}></div>
                         </div>
                     </div>
                 </div>

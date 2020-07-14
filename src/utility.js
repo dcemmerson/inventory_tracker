@@ -18,20 +18,33 @@ export function deepCopy(current) {
     return next;
 }
 
+export function getSortMethod(sortBy, asc = true) {
+    if(sortBy === "byQuantity") {
+        return byQuantity(asc);
+    }
+    else if(sortBy === "byDaysLeft") {
+        return byDaysLeft(asc);
+    }
+    else if(sortBy === "byBurnRate") {
+        return byBurnRate(asc);
+    }
+    else {
+        return byName(asc);
+    }
+}
 
-export function byQuantity(asc = true) {
-    let sortDir;
-    if (asc) sortDir = -1;
-    else sortDir = 1;
+function byQuantity(asc = true) {
+    let sortDir = 1;
+    if (!asc) sortDir = -1;
 
     return function (a, b) {
-        a.quantity = parseFloat(a.quantity);
-        b.quantity = parseFloat(b.quantity);
+        a.data.quantity = parseFloat(a.data.quantity);
+        b.data.quantity = parseFloat(b.data.quantity);
 
-        if (a.quantity < b.quantity) {
+        if (a.data.quantity < b.data.quantity) {
             return -1 * sortDir;
         }
-        else if (a.quantity === b.quantity) {
+        else if (a.data.quantity === b.data.quantity) {
             return 0;
         }
         else {
@@ -40,19 +53,18 @@ export function byQuantity(asc = true) {
     }
 }
 
-export function byDaysLeft(asc = true) {
-    let sortDir;
-    if (asc) sortDir = -1;
-    else sortDir = 1;
+function byDaysLeft(asc = true) {
+    let sortDir = 1;
+    if (!asc) sortDir = -1;
 
     return function (a, b) {
-        a.daysLeft = parseFloat(a.daysLeft);
-        b.daysLeft = parseFloat(b.daysLeft);
+        a.data.daysLeft = parseFloat(a.data.daysLeft);
+        b.data.daysLeft = parseFloat(b.data.daysLeft);
 
-        if (a.daysLeft < b.daysLeft) {
+        if (a.data.daysLeft < b.data.daysLeft) {
             return -1 * sortDir;
         }
-        else if (a.daysLeft === b.daysLeft) {
+        else if (a.data.daysLeft === b.data.daysLeft) {
             return 0;
         }
         else {
@@ -61,19 +73,18 @@ export function byDaysLeft(asc = true) {
     }
 }
 
-export function byBurnRate(asc = true) {
-    let sortDir;
-    if (asc) sortDir = -1;
-    else sortDir = 1;
+function byBurnRate(asc = true) {
+    let sortDir = 1;
+    if (!asc) sortDir = -1;
 
     return function (a, b) {
-        a.burnRate = parseFloat(a.burnRate);
-        b.burnRate = parseFloat(b.burnRate);
+        a.data.burnRate = parseFloat(a.data.burnRate);
+        b.data.burnRate = parseFloat(b.data.burnRate);
 
-        if (a.burnRate < b.burnRate) {
+        if (a.data.burnRate < b.data.burnRate) {
             return -1 * sortDir;
         }
-        else if (a.burnRate === b.burnRate) {
+        else if (a.data.burnRate === b.data.burnRate) {
             return 0;
         }
         else {
@@ -83,16 +94,15 @@ export function byBurnRate(asc = true) {
 
 }
 
-export function byName(a, b,) {
-    let sortDir;
-    if (asc) sortDir = -1;
-    else sortDir = 1;
+function byName(asc = true) {
+    let sortDir = 1;
+    if (!asc) sortDir = -1;
     
-    return function(a, b) {
-        if (a.name < b.name) {
+    return function (a, b) {
+        if (a.data.name < b.data.name) {
             return -1 * sortDir;
         }
-        else if (a.name === b.name) {
+        else if (a.data.name === b.data.name) {
             return 0;
         }
         else {

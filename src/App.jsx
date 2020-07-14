@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useIdentityContext } from "react-netlify-identity-widget";
 
 import { Main } from './Main.jsx';
-import { deepCopy, byQuantity, byBurnRate, byDaysLeft, byName, reverseArray } from './utility';
+import { deepCopy, getSortMethod } from './utility';
 //import logo from './logo.svg';
 import './App.css';
 
@@ -20,7 +20,8 @@ export default function App(props) {
   const [loggedIn, setLoggedIn] = useState(identity && identity.isLoggedIn);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
-  let sortMethod = byDaysLeft(true);
+  const [sortAsc, setSortAsc] = useState(true);
+  const [sortBy, setSortBy] = useState("byDaysLeft");
 
   useEffect(() => {
     if (loggedIn) {
@@ -39,10 +40,22 @@ export default function App(props) {
   }, [loggedIn]);
 
   useEffect(() => {
-    if (updating === false) {
-
+    if (!loading && !updating && loggedIn) {
+      const sortedInventory = deepCopy(inventory);
+      sortedInventory.sort(getSortMethod(sortBy, sortAsc));
+      setInventory(sortedInventory);
     }
-  }, [updating])
+  }, [sortBy, sortAsc, loading, updating, loggedIn]);
+
+  function sortItems(changeToSort) {
+    if (sortBy === changeToSort) {
+      setSortAsc(!sortAsc)
+    }
+    else {
+      setSortBy(changeToSort);
+      setSortAsc(true);
+    }
+  }
 
   function handleNumericInput(itemId, e) {
 
@@ -50,10 +63,10 @@ export default function App(props) {
     let value = e.target.value;
     const charCode = value.charCodeAt(value.length - 1);
 
-    if(charCode >= ASCII_CODE_ZERO && charCode <= ASCII_CODE_NINE){
+    if (charCode >= ASCII_CODE_ZERO && charCode <= ASCII_CODE_NINE) {
       value = parseFloat(e.target.value);
     }
-    else if(charCode !== ASCII_CODE_DECIMAL) {
+    else if (charCode !== ASCII_CODE_DECIMAL) {
       return;
     }
 
@@ -92,6 +105,8 @@ export default function App(props) {
         console.log("updte inv = ")
         console.log(updatedInventory)
         setInventory(updatedInventory);
+        setPrevInventory(deepCopy(updatedInventory));
+
         setUpdating(false);
       })
 
@@ -124,8 +139,9 @@ export default function App(props) {
   function removeItemRow(id) {
     let newInventory = deepCopy(inventory)
     newInventory = newInventory.map(item => {
-      if (item.id === id) {
+      if (item.data.id === id) {
         item.deleteItem = true;
+        item.editMode = false;
       }
       return item;
     })
@@ -145,7 +161,7 @@ export default function App(props) {
       item.editMode = false;
       return item;
     })
-    return inv.data.sort(sortMethod);
+    return inv.data.sort(getSortMethod(sortBy, sortAsc));
   }
 
   function setItemEditMode(itemId, editMode = true) {
@@ -242,6 +258,7 @@ export default function App(props) {
         updating={updating}
         addItemRow={addItemRow}
         removeItemRow={removeItemRow}
+        sortItems={sortItems}
       />
     </div>
 

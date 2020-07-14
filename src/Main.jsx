@@ -40,6 +40,7 @@ export function Main(props) {
           updating={props.updating}
           addItemRow={props.addItemRow}
           removeItemRow={props.removeItemRow}
+          sortItems={props.sortItems}
         />
       </>
     );

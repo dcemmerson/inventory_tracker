@@ -30,7 +30,7 @@ exports.handler = async function (event, context) {
                 return insertItem(item, currentTimestamp)
             }
             else if (item.deleteItem) {
-
+                return deleteItem(item);
             }
             else if (item.editted) {
                 return updateItem(item, currentTimestamp);
@@ -70,6 +70,22 @@ exports.handler = async function (event, context) {
     }
 }
 
+function deleteItem(item) {
+    try {
+        const query = q.Delete(
+            q.Select(
+                "ref",
+                q.Get(
+                    q.Match(q.Index("inventory_id"), item.data.id)
+                )
+            )
+        );
+        return client.query(query);
+    }
+    catch (err) {
+        return { ...item, error: true, msg: "Error: insert error" };
+    }
+}
 
 function insertItem(item, currentTimestamp) {
     try {

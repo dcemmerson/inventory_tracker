@@ -1,6 +1,8 @@
 $green: #5ac84d;
 $gray: #383838;
 $offwhite: #f0f0f0;
+$danger: #820000;
+
 body {
     #root {
         background-color: rgba(0, 0, 0, 0.75);
@@ -19,25 +21,38 @@ body {
                 text-align: center;
                 color: $green;
                 background-color: $gray;
-                font-weight: 500;
+                box-shadow: 0 0 10px #222222;
+                th {
+                    font-weight: 650;
+                    padding: 0.35rem;
 
+                }
                 td {
                     padding: 0.25rem;
                     transition: display 1s;
+                    font-weight: 500;
                 }
                 input {
                     max-width: 20vw;
                 }
             }
-
+            .deletedRow {
+                background-color: $danger;
+            }
             .btn--cancel,
             .btn--save {
-                color: $offwhite;
-                font-weight: 500;
+                color: $green;
+                background-color: rgba(0,0,0,0);
+                font-weight: 550;
+                border: 0.15rem solid $green;
+                border-radius: 2.5px;
+                transition: background-color 0.5s, color 0.5s;
             }
             .btn--cancel:hover,
             .btn--save:hover {
-                background-color: $gray;
+                background-color: $green;
+                color: $offwhite;
+
             }
             .btn--cancel:focus,
             .btn--save:focus {
@@ -115,6 +130,22 @@ body {
     opacity: 0%;
     transition: opacity 1s;
 }
+.deleteItemRow::before {
+    content: "";
+
+    background-image: url(../images/trash--red.png);
+    background-position: center;
+    background-size: 85%;
+    background-repeat: no-repeat;
+
+    width: 1.2rem;
+    height: 1.2rem;
+    position: absolute;
+    margin-top: 0.25rem;
+    left: -0.8rem;
+    opacity: 100%;
+    transition: opacity 1s;
+}
 .sort:hover {
     cursor: pointer;
     opacity: 50%;
@@ -135,6 +166,11 @@ body {
     opacity: 50%;
     transition: opacity 0.25s;
 }
+.deleteItemRow:hover {
+    cursor: pointer;
+    opacity: 50%;
+    transition: opacity 0.25s;
+}
 body:hover {
     .sort::after {
         opacity: 100%;
@@ -150,3 +186,20 @@ body:hover {
     }
 }
 
+.userActionRequired {
+    border: 0.15rem solid $danger;
+    animation: blinking 3s linear infinite;
+    animation-delay: 2s;
+}
+
+@keyframes blinking {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 50%;
+    }
+    100% {
+        opacity: 1;
+    }
+}
