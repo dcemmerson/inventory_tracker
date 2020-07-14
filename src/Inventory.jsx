@@ -8,20 +8,6 @@ export function Inventory(props) {
     let showSaveButton = false;
     let itemInLimbo = false;
 
-    function addSwipeGestures() {
-        import('tinygesture').then(TinyGesture => {
-            const trs = document.getElementsByTagName('tr');
-            Object.values(trs).forEach(tr => {
-                const gesture = new TinyGesture(tr);
-                gesture.on('swipeleft', e => {
-                    let test = document.getElementsByTagName('table');
-                    test.setAttribute('style', 'display:none');
-                });
-            });
-        })
-
-    }
-
     return (
         <div className="container-fluid">
             <div className={"tableContainer " + (isLoggedIn ? 'd-block' : 'd-none')}>
@@ -62,8 +48,9 @@ export function Inventory(props) {
                                                         <td><input name="burnRate" value={item.data.burnRate} type="number"
                                                             onChange={e => props.handleNumericInput(item.data.id, e)}
                                                         /></td>
-                                                        <td><input name="daysLeft" value={item.data.daysLeft} disabled={true} type="number"
-                                                        /></td>
+                                                        <td>
+                                                            <input name="daysLeft" value={item.data.daysLeft} disabled={true} type="number" />
+                                                        </td>
                                                     </tr>
                                                 );
                                             }
@@ -71,7 +58,6 @@ export function Inventory(props) {
                                                 return (
                                                     <tr key={item.data.id} className={item.deleteItem ? "deletedRow" : ""}
                                                         onClick={() => props.setItemEditMode(item.data.id)}
-
                                                     >
                                                         <td>{item.data.quantity}</td>
                                                         <td>{item.data.name}</td>

@@ -23,6 +23,7 @@ body {
                 background-color: rgba(0,0,0, 0.75);
                 width: 0%;
                 height: 100%;
+                -webkit-transition: width 0.3s;
                 transition: width 0.3s;
             }
             table {
@@ -38,6 +39,7 @@ body {
                 }
                 td {
                     padding: 0.25rem;
+                    -webkit-transition: display 1s;
                     transition: display 1s;
                     font-weight: 500;
                 }
@@ -55,6 +57,7 @@ body {
                 font-weight: 550;
                 border: 0.15rem solid $green;
                 border-radius: 2.5px;
+                -webkit-transition: background-color 0.5s, color 0.5s;
                 transition: background-color 0.5s, color 0.5s;
             }
             .btn--cancel:hover,
@@ -94,6 +97,7 @@ body {
     position: relative;
     left: 0.5rem;
     opacity: 0%;
+    -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
 .sort--up::after {
@@ -110,6 +114,7 @@ body {
     position: relative;
     left: 0.5rem;
     opacity: 0%;
+    -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
 .sort--down::after {
@@ -126,6 +131,7 @@ body {
     position: relative;
     left: 0.5rem;
     opacity: 0%;
+    -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
 .addItemRow::before {
@@ -140,49 +146,86 @@ body {
     display: inline-block;
     position: relative;
     opacity: 0%;
+    -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
-.deleteItemRow::before {
-    content: "";
 
-    background-image: url(../images/trash--red.png);
-    background-position: center;
-    background-size: 85%;
-    background-repeat: no-repeat;
+@media (max-width: 992px) {
+    .deleteItemRowMobile::before {
+        content: "";
 
-    width: 1.2rem;
-    height: 1.2rem;
-    position: absolute;
-    margin-top: 0.25rem;
-    left: -0.8rem;
-    opacity: 100%;
-    transition: opacity 1s;
+        background-image: url(../images/trash--red.png);
+        background-position: center;
+        background-size: 85%;
+        background-repeat: no-repeat;
+    
+        width: 1.2rem;
+        height: 1.2rem;
+        position: absolute;
+        margin-top: 0.25rem;
+        left: -0.8rem;
+        opacity: 100%;
+        -webkit-transition: opacity 1s;
+        transition: opacity 1s;
+    }
+    .deleteItemRow::before {
+        display: none;
+    }
 }
+@media (min-width: 992px){
+    .deleteItemRowMobile::before {
+        display:none;
+    }
+    .deleteItemRow::before {
+        content: "";
+    
+        background-image: url(../images/trash--red.png);
+        background-position: center;
+        background-size: 85%;
+        background-repeat: no-repeat;
+    
+        width: 1.2rem;
+        height: 1.2rem;
+        position: absolute;
+        margin-top: 0.25rem;
+        left: -0.8rem;
+        opacity: 100%;
+        -webkit-transition: opacity 1s;
+        transition: opacity 1s;
+    }
+}
+
 .sort:hover {
     cursor: pointer;
     opacity: 50%;
+    -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 .sort--down:hover {
     cursor: pointer;
     opacity: 50%;
-    transition: opacity 0.25s;
+    -webkit-transition: opacity 0.25s;
+    transition: opacity 0.25s;   
 }
 .sort--up:hover {
     cursor: pointer;
     opacity: 50%;
+    -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 .addItemRow:hover {
     cursor: pointer;
     opacity: 50%;
+    -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
-.deleteItemRow:hover {
+.deleteItemRow:hover::before, .deleteItemRowMobile:hover  {
     cursor: pointer;
     opacity: 50%;
+    -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
+
 body:hover {
     .sort::after {
         opacity: 100%;
