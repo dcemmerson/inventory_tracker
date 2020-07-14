@@ -17,6 +17,7 @@
     "dotenv": "^8.2.0",
     "encoding": "^0.1.13",
     "faunadb": "^2.14.2",
+    "file-loader": "^6.0.0",
     "netlify-lambda": "^1.6.3",
     "node-sass": "^4.14.1",
     "postcss-loader": "^3.0.0",
