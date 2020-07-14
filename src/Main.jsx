@@ -15,9 +15,9 @@ export function Main(props) {
   function loadingView() {
     return (
       <>
-        {/* <Login 
+         <Login 
           setLoggedIn={props.setLoggedIn}
-        /> */}
+        />
         <LoadMessage />
       </>
     );
