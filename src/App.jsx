@@ -168,7 +168,7 @@ export default function App(props) {
     console.log('unnormalized inv = ');
     console.log(inv);
     if (!inv.data) {
-      return new Error(`No inventory.data: ${inv.msg}`);
+      throw new Error(`No inventory.data: ${inv.msg}`);
     }
     inv.data = inv.data.map(item => {
       item.data.daysLeft = (item.data.quantity / item.data.burnRate).toFixed(1);
