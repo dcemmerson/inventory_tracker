@@ -1,6 +1,6 @@
 # netlify.toml
 
 [build]
-    command = "npm run build"
+    command = "npm run lambda-build"
     public = "dist"
     functions = "lambda"
