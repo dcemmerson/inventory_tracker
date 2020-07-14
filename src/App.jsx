@@ -104,8 +104,6 @@ export default function App(props) {
     setUpdating(true);
     updateInventory(inventory, identity.user.token.access_token)
       .then(updatedInventory => {
-        console.log("updte inv = ")
-        console.log(updatedInventory)
         setInventory(updatedInventory);
         setPrevInventory(deepCopy(updatedInventory));
 

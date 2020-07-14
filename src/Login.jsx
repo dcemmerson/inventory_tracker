@@ -11,7 +11,7 @@ export function Login(props) {
 
   return (
     <>
-      <div className="div">
+      <div className="mt-3 ml-4">
         <button className="btn btn-sm btn-cust" onClick={() => setDialog(!dialog)}>
           {isLoggedIn ? "LOG OUT" : "LOG IN"}
         </button>
