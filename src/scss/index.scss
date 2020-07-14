@@ -20,7 +20,7 @@ body {
         .tableContainer {
             .tableCover {
                 position: absolute;
-                background-color: rgba(0,0,0, 0.75);
+                background-color: rgba(0, 0, 0, 0.75);
                 width: 0%;
                 height: 100%;
                 -webkit-transition: width 0.3s;
@@ -35,7 +35,6 @@ body {
                 th {
                     font-weight: 650;
                     padding: 0.35rem;
-
                 }
                 td {
                     padding: 0.25rem;
@@ -43,9 +42,20 @@ body {
                     transition: display 1s;
                     font-weight: 500;
                 }
-                input {
+                .input {
                     max-width: 20vw;
                 }
+                @media (min-width: 760px) and (max-width: 992px) {
+                    .input.daysLeft {
+                        max-width: 10vw;
+                    }
+                }
+                @media (max-width: 760px) {
+                    .input.daysLeft {
+                        display: none;
+                    }
+                }
+
             }
             .deletedRow {
                 background-color: $danger;
@@ -53,7 +63,7 @@ body {
             .btn--cancel,
             .btn--save {
                 color: $green;
-                background-color: rgba(0,0,0,0);
+                background-color: rgba(0, 0, 0, 0);
                 font-weight: 550;
                 border: 0.15rem solid $green;
                 border-radius: 2.5px;
@@ -64,7 +74,6 @@ body {
             .btn--save:hover {
                 background-color: $green;
                 color: $offwhite;
-
             }
             .btn--cancel:focus,
             .btn--save:focus {
@@ -75,11 +84,11 @@ body {
         .spinner-sm {
             width: 1rem;
             height: 1rem;
-        };
+        }
         .spinner-md {
             width: 1.5rem;
             height: 1.5rem;
-        };
+        }
     }
 }
 
@@ -149,49 +158,40 @@ body {
     -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
+.deleteItemRow::before {
+    content: "";
 
-@media (max-width: 992px) {
-    .deleteItemRowMobile::before {
-        content: "";
+    background-image: url(../images/trash--red.png);
+    background-position: center;
+    background-size: 85%;
+    background-repeat: no-repeat;
 
-        background-image: url(../images/trash--red.png);
-        background-position: center;
-        background-size: 85%;
-        background-repeat: no-repeat;
-    
-        width: 1.2rem;
-        height: 1.2rem;
-        position: absolute;
-        margin-top: 0.25rem;
-        left: -0.8rem;
-        opacity: 100%;
-        -webkit-transition: opacity 1s;
-        transition: opacity 1s;
-    }
+    width: 1.2rem;
+    height: 1.2rem;
+    position: absolute;
+    margin-top: 0.3rem;
+    opacity: 100%;
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s, right 0.5s, left 0.5s;
+}
+@media (max-width: 600px) {
     .deleteItemRow::before {
-        display: none;
+        right: 3rem;
     }
 }
-@media (min-width: 992px){
-    .deleteItemRowMobile::before {
-        display:none;
-    }
+@media (max-width: 760px) {
     .deleteItemRow::before {
-        content: "";
-    
-        background-image: url(../images/trash--red.png);
-        background-position: center;
-        background-size: 85%;
-        background-repeat: no-repeat;
-    
-        width: 1.2rem;
-        height: 1.2rem;
-        position: absolute;
-        margin-top: 0.25rem;
+        right: 4rem;
+    }
+}
+@media (min-width: 760px) and (max-width: 992px) {
+    .deleteItemRow::before {
+        left: 1.2rem;
+    }
+}
+@media (min-width: 992px) {
+    .deleteItemRow::before {
         left: -0.8rem;
-        opacity: 100%;
-        -webkit-transition: opacity 1s;
-        transition: opacity 1s;
     }
 }
 
@@ -205,7 +205,7 @@ body {
     cursor: pointer;
     opacity: 50%;
     -webkit-transition: opacity 0.25s;
-    transition: opacity 0.25s;   
+    transition: opacity 0.25s;
 }
 .sort--up:hover {
     cursor: pointer;
@@ -219,7 +219,8 @@ body {
     -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
-.deleteItemRow:hover::before, .deleteItemRowMobile:hover  {
+.deleteItemRow:hover::before,
+.deleteItemRowMobile:hover {
     cursor: pointer;
     opacity: 50%;
     -webkit-transition: opacity 0.25s;
@@ -264,7 +265,7 @@ body:hover {
         opacity: 1;
     }
     50% {
-        opacity: 50%;
+        opacity: 25%;
     }
     100% {
         opacity: 1;

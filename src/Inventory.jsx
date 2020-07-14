@@ -39,17 +39,18 @@ export function Inventory(props) {
                                                 return (
                                                     <tr key={item.data.id} className={item.deleteItem ? "deletedRow" : ""}>
                                                         <td><span className="deleteItemRow" onClick={() => props.removeItemRow(item.data.id)}></span>
-                                                            <input name="quantity" value={item.data.quantity} type="number"
+                                                            <input className="input" name="quantity" value={item.data.quantity} type="number"
                                                                 onChange={e => props.handleNumericInput(item.data.id, e)}
                                                             /></td>
-                                                        <td><input name="name" value={item.data.name} type="text"
+                                                        <td><input className="input" name="name" value={item.data.name} type="text"
                                                             onChange={e => props.handleStringInput(item.data.id, e)}
                                                         /></td>
-                                                        <td><input name="burnRate" value={item.data.burnRate} type="number"
+                                                        <td><input className="input" name="burnRate" value={item.data.burnRate} type="number"
                                                             onChange={e => props.handleNumericInput(item.data.id, e)}
                                                         /></td>
                                                         <td>
-                                                            <input name="daysLeft" value={item.data.daysLeft} disabled={true} type="number" />
+                                                            <input className="input daysLeft" name="daysLeft" value={item.data.daysLeft} 
+                                                            disabled={true} type="number" />
                                                         </td>
                                                     </tr>
                                                 );

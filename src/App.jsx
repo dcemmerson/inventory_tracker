@@ -163,7 +163,6 @@ export default function App(props) {
 
   }
 
-
   function normalizeInventoryData(inv) {
     console.log('unnormalized inv = ');
     console.log(inv);
@@ -180,7 +179,7 @@ export default function App(props) {
 
   function setItemEditMode(itemId, editMode = true) {
     const newInventory = inventory.map(item => {
-      if (item.data.id === itemId) {
+      if (item.data.id === itemId && !item.deleteItem) {
         item.editMode = true;
       }
       return item;
