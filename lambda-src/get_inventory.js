@@ -22,13 +22,13 @@ const query = q.Map(
 )
 
 exports.handler = async function (event, context) {
-
     const { identity, user } = context.clientContext;
+
+    let results;
     if (user) {
-        let results;
+
         try {
-            results = tallyInventory(await client.query(query));
-//            results = await client.query(query);
+            results = tallyInventory(await getInventory(context));
         }
         catch (err) {
             results = err;
@@ -48,9 +48,11 @@ exports.handler = async function (event, context) {
             body: JSON.stringify({
                 msg: 'not logged in',
                 context: context,
-                event: event,
             }),
         };
     }
 }
 
+export function getInventory(context) {
+    return client.query(query);
+}

@@ -7936,6 +7936,140 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 
 /***/ }),
 
+/***/ "./get_inventory.js":
+/*!**************************!*\
+  !*** ./get_inventory.js ***!
+  \**************************/
+/*! exports provided: getInventory */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInventory", function() { return getInventory; });
+/* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! faunadb */ "../node_modules/faunadb/index.js");
+/* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(faunadb__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _tally_inventory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tally_inventory */ "./tally_inventory.js");
+
+
+
+__webpack_require__(/*! dotenv */ "../node_modules/dotenv/lib/main.js").config();
+
+const statusCode = 200;
+const headers = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type"
+};
+const q = faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.query;
+const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
+  secret: process.env.DB_SERVER_KEY
+});
+const query = q.Map(q.Paginate(q.Match(q.Index("get_inventory"))), q.Lambda("X", q.Get(q.Var("X"))));
+
+exports.handler = async function (event, context) {
+  const {
+    identity,
+    user
+  } = context.clientContext;
+  let results;
+
+  if (user) {
+    try {
+      results = Object(_tally_inventory__WEBPACK_IMPORTED_MODULE_1__["tallyInventory"])((await getInventory(context)));
+    } catch (err) {
+      results = err;
+    } finally {
+      return {
+        statusCode,
+        headers,
+        body: JSON.stringify(results)
+      };
+    }
+  } else {
+    return {
+      statusCode,
+      headers,
+      body: JSON.stringify({
+        msg: 'not logged in',
+        context: context
+      })
+    };
+  }
+};
+
+function getInventory(context) {
+  return client.query(query);
+}
+
+/***/ }),
+
+/***/ "./tally_inventory.js":
+/*!****************************!*\
+  !*** ./tally_inventory.js ***!
+  \****************************/
+/*! exports provided: tallyInventory */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tallyInventory", function() { return tallyInventory; });
+/* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! faunadb */ "../node_modules/faunadb/index.js");
+/* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(faunadb__WEBPACK_IMPORTED_MODULE_0__);
+
+
+__webpack_require__(/*! dotenv */ "../node_modules/dotenv/lib/main.js").config();
+
+const SECONDS_PER_DAY = 60 * 60 * 24;
+const q = faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.query;
+const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
+  secret: process.env.DB_SERVER_KEY
+});
+function tallyInventory(inventory) {
+  inventory.data = inventory.data.map(item => {
+    item.data = consumeSupplies(item.data);
+    return item;
+  });
+  return inventory;
+}
+
+function consumeSupplies(data) {
+  const currentTimestamp = Math.round(new Date().getTime() / 1000);
+  const daysToSubtract = Math.trunc((currentTimestamp - data.lastModified) / SECONDS_PER_DAY);
+
+  if (daysToSubtract > 0) {
+    data.lastModified += SECONDS_PER_DAY * daysToSubtract;
+    data.quantity -= data.burnRate * daysToSubtract;
+    updateItemInDb(data, currentTimestamp);
+  }
+
+  if (data.quantity < 0) {
+    data.quantity = 0;
+  }
+
+  return data;
+}
+
+async function updateItemInDb(data, currentTimestamp) {
+  const query = q.Update(q.Select("ref", q.Get(q.Match(q.Index("inventory_id"), data.id))), {
+    data: {
+      "name": data.name,
+      "quantity": data.quantity,
+      "burnRate": data.burnRate,
+      "lastModified": currentTimestamp
+    }
+  });
+  let results;
+
+  try {
+    //Fire off db update but don't worry about waiting to
+    // check if it returned.
+    client.query(query);
+  } catch (err) {
+    results = err;
+  }
+}
+
+/***/ }),
+
 /***/ "./update_inventory.js":
 /*!*****************************!*\
   !*** ./update_inventory.js ***!
@@ -7947,6 +8081,16 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! faunadb */ "../node_modules/faunadb/index.js");
 /* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(faunadb__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _get_inventory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./get_inventory */ "./get_inventory.js");
+/* harmony import */ var _tally_inventory__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tally_inventory */ "./tally_inventory.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
 
 
 __webpack_require__(/*! dotenv */ "../node_modules/dotenv/lib/main.js").config();
@@ -7962,28 +8106,91 @@ const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
 });
 
 exports.handler = async function (event, context) {
-  const data = JSON.parse(event.body);
-  const query = q.Update(q.Select("ref", q.Get(q.Match(q.Index("inventory_id"), data.id))), {
-    data: {
-      "name": data.name,
-      "quantity": data.quantity,
-      "burn_rate": data.burnRate
-    }
-  });
+  const {
+    identity,
+    user
+  } = context.clientContext;
   let results;
 
-  try {
-    results = await client.query(query);
-  } catch (err) {
-    results = err;
-  } finally {
+  if (user) {
+    const currentTimestamp = Math.round(new Date().getTime() / 1000);
+    const inventory = JSON.parse(event.body);
+    let awaitPromises = inventory.map(item => {
+      if (item.newItem) {
+        return insertItem(item, currentTimestamp);
+      } else if (item.deleteItem) {} else if (item.editted) {
+        return updateItem(item, currentTimestamp);
+      }
+
+      return null;
+    });
+    const res = await Promise.all(awaitPromises).then(() => {
+      return Object(_get_inventory__WEBPACK_IMPORTED_MODULE_1__["getInventory"])(context);
+    }).then(dbInventory => {
+      return _objectSpread(_objectSpread({}, Object(_tally_inventory__WEBPACK_IMPORTED_MODULE_2__["tallyInventory"])(dbInventory)), {}, {
+        success: true
+      });
+    }).catch(err => {
+      return {
+        success: false,
+        error: err
+      };
+    });
     return {
       statusCode,
       headers,
-      body: JSON.stringify(results)
+      body: JSON.stringify(res)
+    };
+  } else {
+    return {
+      statusCode,
+      headers,
+      body: JSON.stringify({
+        msg: 'not logged in',
+        context: context
+      })
     };
   }
 };
+
+function insertItem(item, currentTimestamp) {
+  try {
+    const query = q.Create(q.Collection("inventory"), {
+      data: {
+        "id": item.data.id,
+        "name": item.data.name,
+        "quantity": item.data.quantity,
+        "burnRate": item.data.burnRate,
+        "lastModified": currentTimestamp
+      }
+    });
+    return client.query(query);
+  } catch (err) {
+    return _objectSpread(_objectSpread({}, item), {}, {
+      error: true,
+      msg: "Error: insert error"
+    });
+  }
+}
+
+function updateItem(item, currentTimestamp) {
+  try {
+    const query = q.Update(q.Select("ref", q.Get(q.Match(q.Index("inventory_id"), item.data.id))), {
+      data: {
+        "name": item.data.name,
+        "quantity": item.data.quantity,
+        "burnRate": item.data.burnRate,
+        "lastModified": currentTimestamp
+      }
+    });
+    return client.query(query);
+  } catch (err) {
+    return _objectSpread(_objectSpread({}, item), {}, {
+      error: true,
+      msg: "Error: insert error"
+    });
+  }
+}
 
 /***/ }),
 

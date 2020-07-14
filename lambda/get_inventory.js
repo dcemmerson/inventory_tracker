@@ -7940,11 +7940,12 @@ module.exports = __webpack_require__(/*! util */ "util").deprecate;
 /*!**************************!*\
   !*** ./get_inventory.js ***!
   \**************************/
-/*! no exports provided */
+/*! exports provided: getInventory */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInventory", function() { return getInventory; });
 /* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! faunadb */ "../node_modules/faunadb/index.js");
 /* harmony import */ var faunadb__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(faunadb__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _tally_inventory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tally_inventory */ "./tally_inventory.js");
@@ -7969,12 +7970,11 @@ exports.handler = async function (event, context) {
     identity,
     user
   } = context.clientContext;
+  let results;
 
   if (user) {
-    let results;
-
     try {
-      results = Object(_tally_inventory__WEBPACK_IMPORTED_MODULE_1__["tallyInventory"])((await client.query(query))); //            results = await client.query(query);
+      results = Object(_tally_inventory__WEBPACK_IMPORTED_MODULE_1__["tallyInventory"])((await getInventory(context)));
     } catch (err) {
       results = err;
     } finally {
@@ -7990,12 +7990,15 @@ exports.handler = async function (event, context) {
       headers,
       body: JSON.stringify({
         msg: 'not logged in',
-        context: context,
-        event: event
+        context: context
       })
     };
   }
 };
+
+function getInventory(context) {
+  return client.query(query);
+}
 
 /***/ }),
 
@@ -8048,7 +8051,6 @@ function consumeSupplies(data) {
 async function updateItemInDb(data, currentTimestamp) {
   const query = q.Update(q.Select("ref", q.Get(q.Match(q.Index("inventory_id"), data.id))), {
     data: {
-      "id": data.id,
       "name": data.name,
       "quantity": data.quantity,
       "burnRate": data.burnRate,

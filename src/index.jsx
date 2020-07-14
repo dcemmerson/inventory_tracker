@@ -17,7 +17,9 @@ const URL = 'https://skyeparker.netlify.app/'
 ReactDOM.render(
   <React.StrictMode>
     <IdentityContextProvider url={URL} >
+      <div></div>
       <App />
+      <div></div>
     </IdentityContextProvider>
   </React.StrictMode>,
   document.getElementById('root')

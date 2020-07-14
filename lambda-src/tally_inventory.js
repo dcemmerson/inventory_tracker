@@ -42,7 +42,6 @@ async function updateItemInDb (data, currentTimestamp) {
         )),
         {
             data: {
-                "id": data.id,
                 "name": data.name,
                 "quantity": data.quantity,
                 "burnRate": data.burnRate,

@@ -7985,7 +7985,6 @@ function consumeSupplies(data) {
 async function updateItemInDb(data, currentTimestamp) {
   const query = q.Update(q.Select("ref", q.Get(q.Match(q.Index("inventory_id"), data.id))), {
     data: {
-      "id": data.id,
       "name": data.name,
       "quantity": data.quantity,
       "burnRate": data.burnRate,

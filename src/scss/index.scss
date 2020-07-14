@@ -1,89 +1,152 @@
-
 $green: #5ac84d;
 $gray: #383838;
 $offwhite: #f0f0f0;
 body {
-    background-color: rgba(0,0,0, 0.75);
-}
+    #root {
+        background-color: rgba(0, 0, 0, 0.75);
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
 
-.tableContainer {
-    
-    .sort::after {
-        content: "";
+        .loadingMessage {
+            color: $green;
+            background-color: $gray;
+        }
 
-        background-image: url(../images/sort.png);
-        background-position: center;
-        background-size: 95%;
-        background-repeat: no-repeat;
+        .tableContainer {
+            table {
+                width: 100%;
+                text-align: center;
+                color: $green;
+                background-color: $gray;
+                font-weight: 500;
 
-        width: 0.85rem;
-        height: 0.85rem;
-        display: inline-block;
-        position: relative;
+                td {
+                    padding: 0.25rem;
+                    transition: display 1s;
+                }
+                input {
+                    max-width: 20vw;
+                }
+            }
 
-    }
-    
-    .sort--up::after {
-        content: "";
+            .btn--cancel,
+            .btn--save {
+                color: $offwhite;
+                font-weight: 500;
+            }
+            .btn--cancel:hover,
+            .btn--save:hover {
+                background-color: $gray;
+            }
+            .btn--cancel:focus,
+            .btn--save:focus {
+                border: 0.2rem solid $green;
+            }
+        }
 
-        background-image: url(../images/sort--up.png);
-        background-position: center;
-        background-size: 95%;
-        background-repeat: no-repeat;
-
-        width: 0.85rem;
-        height: 0.85rem;
-        display: inline-block;
-        position: relative;
-
-    }
-
-    .sort--down::after {
-        content: "";
-
-        background-image: url(../images/sort--down.png);
-        background-position: center;
-        background-size: 95%;
-        background-repeat: no-repeat;
-
-        width: 0.85rem;
-        height: 0.85rem;
-        display: inline-block;
-        position: relative;
-
-    }
-
-    table {
-        width: 100%;
-        text-align: center;
-        color: $green;
-        background-color: $gray;
-        font-weight: 500;
-
-        input {
-            max-width: 20vw;
+        .spinner-sm {
+            font-size: 0.5rem;
+            width: 1rem;
+            height: 1rem;
         }
     }
+}
 
-    .addItemRow {
-        background-image: url(../images/plus--green.png);
-        background-position: center;
-        background-size: 95%;
-        background-repeat: no-repeat;
+.sort::after {
+    content: "";
 
-        width: 0.85rem;
-        height: 0.85rem;
-        display: inline-block;
-        position: relative;
+    background-image: url(../images/sort.png);
+    background-position: center;
+    background-size: 85%;
+    background-repeat: no-repeat;
+
+    width: 0.85rem;
+    height: 0.85rem;
+    display: inline-block;
+    position: relative;
+    left: 0.5rem;
+    opacity: 0%;
+    transition: opacity 1s;
+}
+.sort--up::after {
+    content: "";
+
+    background-image: url(../images/sort--up.png);
+    background-position: center;
+    background-size: 85%;
+    background-repeat: no-repeat;
+
+    width: 0.85rem;
+    height: 0.85rem;
+    display: inline-block;
+    position: relative;
+    left: 0.5rem;
+    opacity: 0%;
+    transition: opacity 1s;
+}
+.sort--down::after {
+    content: "";
+
+    background-image: url(../images/sort--down.png);
+    background-position: center;
+    background-size: 85%;
+    background-repeat: no-repeat;
+
+    width: 0.85rem;
+    height: 0.85rem;
+    display: inline-block;
+    position: relative;
+    left: 0.5rem;
+    opacity: 0%;
+    transition: opacity 1s;
+}
+.addItemRow::before {
+    content: "";
+    background-image: url(../images/plus--green.png);
+    background-position: center;
+    background-size: 95%;
+    background-repeat: no-repeat;
+
+    width: 0.85rem;
+    height: 0.85rem;
+    display: inline-block;
+    position: relative;
+    opacity: 0%;
+    transition: opacity 1s;
+}
+.sort:hover {
+    cursor: pointer;
+    opacity: 50%;
+    transition: opacity 0.25s;
+}
+.sort--down:hover {
+    cursor: pointer;
+    opacity: 50%;
+    transition: opacity 0.25s;
+}
+.sort--up:hover {
+    cursor: pointer;
+    opacity: 50%;
+    transition: opacity 0.25s;
+}
+.addItemRow:hover {
+    cursor: pointer;
+    opacity: 50%;
+    transition: opacity 0.25s;
+}
+body:hover {
+    .sort::after {
+        opacity: 100%;
     }
-    .btn--cancel,.btn--save {
-        color: $offwhite;
-        font-weight: 500;
+    .sort--up::after {
+        opacity: 100%;
     }
-    .btn--cancel:hover, .btn--save:hover {
-        background-color: $gray;
+    .sort--down::after {
+        opacity: 100%;
     }
-    .btn--cancel:focus, .btn--save:focus {
-        border: 0.2rem solid $green;
+    .addItemRow::before {
+        opacity: 100%;
     }
 }
+

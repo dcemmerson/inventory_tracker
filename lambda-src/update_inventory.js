@@ -1,6 +1,9 @@
 import faunadb from 'faunadb';
+import { getInventory } from './get_inventory';
+import { tallyInventory } from './tally_inventory';
 
 require('dotenv').config();
+
 
 const statusCode = 200;
 const headers = {
@@ -14,35 +17,101 @@ const client = new faunadb.Client({
 })
 
 exports.handler = async function (event, context) {
-    const data = JSON.parse(event.body)
-    const query = q.Update(
-        q.Select("ref",
-        q.Get(
-            q.Match(q.Index("inventory_id"), data.id)
-        )),
-        {
-            data: {
-                "name": data.name,
-                "quantity": data.quantity,
-                "burn_rate": data.burnRate, 
-             }
-        }
-    )
+    const { identity, user } = context.clientContext;
 
     let results;
-    try {
-        results = await client.query(query)
+    if (user) {
 
-    }
-    catch (err) {
-        results = err;
-    }
-    finally {
+        const currentTimestamp = Math.round(new Date().getTime() / 1000)
+        const inventory = JSON.parse(event.body)
+
+        let awaitPromises = inventory.map(item => {
+            if (item.newItem) {
+                return insertItem(item, currentTimestamp)
+            }
+            else if (item.deleteItem) {
+
+            }
+            else if (item.editted) {
+                return updateItem(item, currentTimestamp);
+            }
+            return null;
+        })
+
+        const res = await Promise.all(awaitPromises)
+            .then(() => {
+                return getInventory(context);
+            })
+            .then(dbInventory => {
+                return { ...(tallyInventory(dbInventory)), success: true };
+            })
+            .catch(err => {
+                return {
+                    success: false,
+                    error: err,
+                };
+            })
+
         return {
             statusCode,
             headers,
-            body: JSON.stringify(results),
+            body: JSON.stringify(res),
+        };
+    }
+    else {
+        return {
+            statusCode,
+            headers,
+            body: JSON.stringify({
+                msg: 'not logged in',
+                context: context,
+            }),
         };
     }
 }
 
+
+function insertItem(item, currentTimestamp) {
+    try {
+        const query = q.Create(
+            q.Collection("inventory"),
+            {
+                data: {
+                    "id": item.data.id,
+                    "name": item.data.name,
+                    "quantity": item.data.quantity,
+                    "burnRate": item.data.burnRate,
+                    "lastModified": currentTimestamp
+                }
+            });
+        return client.query(query);
+    }
+    catch (err) {
+        return { ...item, error: true, msg: "Error: insert error" };
+    }
+
+
+}
+
+function updateItem(item, currentTimestamp) {
+    try {
+        const query = q.Update(
+            q.Select("ref",
+                q.Get(
+                    q.Match(q.Index("inventory_id"), item.data.id)
+                )),
+            {
+                data: {
+                    "name": item.data.name,
+                    "quantity": item.data.quantity,
+                    "burnRate": item.data.burnRate,
+                    "lastModified": currentTimestamp,
+                }
+            }
+        )
+        return client.query(query);
+    }
+    catch (err) {
+        return { ...item, error: true, msg: "Error: insert error" };
+    }
+}
