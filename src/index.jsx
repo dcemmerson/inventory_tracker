@@ -56,4 +56,3 @@ function fullScreen() {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('main').addEventListener('dblclick', fullScreen);
 })
-
