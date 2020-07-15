@@ -5,12 +5,10 @@ $danger: #820000;
 
 body {
     #root {
-        background-color: rgba(0, 0, 0, 0.75);
+        background-color: $gray;//rgba(0, 0, 0, 0.75);
         min-height: 100vh;
         display: grid;
         grid-template-rows: auto 1fr auto;
-
-
 
         .loadingMessage {
             color: $green;
@@ -22,7 +20,7 @@ body {
         .tableContainer {
             .tableCover {
                 position: absolute;
-                background-color: rgba(0, 0, 0, 0.75);
+                background-color: rgba(0, 0, 0, 0.9);
                 width: 0%;
                 height: 100%;
                 // -webkit-transition: width 0.3s;
@@ -33,7 +31,7 @@ body {
                 text-align: center;
                 color: $green;
                 background-color: $gray;
-                box-shadow: 0 0 10px #222222;
+                // box-shadow: 0 0 10px #222222;
                 th {
                     font-weight: 650;
                     padding: 0.35rem;

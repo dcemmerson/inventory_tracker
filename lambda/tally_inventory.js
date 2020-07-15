@@ -7952,7 +7952,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! dotenv */ "../node_modules/dotenv/lib/main.js").config();
 
-const SECONDS_PER_DAY = 60; //60 * 60 * 24;
+const SECONDS_PER_DAY = 60 * 2; //60 * 60 * 24;
 
 const q = faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.query;
 const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
@@ -7973,7 +7973,7 @@ function consumeSupplies(data) {
   if (daysToSubtract > 0) {
     data.lastModified += SECONDS_PER_DAY * daysToSubtract;
     data.quantity -= data.burnRate * daysToSubtract;
-    updateItemInDb(data, currentTimestamp);
+    data.updateMsg = updateItemInDb(data, currentTimestamp);
   }
 
   if (data.quantity < 0) {
@@ -7992,14 +7992,11 @@ async function updateItemInDb(data, currentTimestamp) {
       "lastModified": currentTimestamp
     }
   });
-  let results;
 
   try {
-    //Fire off db update but don't worry about waiting to
-    // check if it returned.
-    client.query(query);
+    return await client.query(query);
   } catch (err) {
-    results = err;
+    return err;
   }
 }
 
