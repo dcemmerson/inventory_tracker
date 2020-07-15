@@ -10,10 +10,9 @@ const client = new faunadb.Client({
 
 export function tallyInventory(inventory) {
     inventory.data = inventory.data.map(item => {
-        item.data = consumeSupplies(item.data);
+//        item.data = consumeSupplies(item.data);
         return item;
     })
-
 
     return inventory;
 }
