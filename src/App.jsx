@@ -13,7 +13,7 @@ const DEFAULT_START_BURN_RATE = 1;
 const ASCII_CODE_DECIMAL = 46;
 const ASCII_CODE_ZERO = 48;
 const ASCII_CODE_NINE = 57;
-const DEFAULT_FETCH_TIMER = 60 * 1000 * 2; // 2 minutes
+const DEFAULT_FETCH_TIMER = 60 * 1000 * 1; // 2 minutes, 1 in dev
 const RETRY_REQUEST_WAIT = 60 * 1000; // 1 minute
 
 export default function App(props) {

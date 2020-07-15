@@ -1,7 +1,7 @@
 import faunadb from 'faunadb';
 require('dotenv').config();
 
-const SECONDS_PER_DAY = 60;//60 * 60 * 24;
+const SECONDS_PER_DAY = 60 * 2;//60 * 60 * 24;
 
 const q = faunadb.query
 const client = new faunadb.Client({
