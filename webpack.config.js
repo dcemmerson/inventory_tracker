@@ -27,7 +27,7 @@ module.exports = [
             index: ['./src/index.jsx'],
 
         },
-        // devtool: 'inline-source-map',
+        //devtool: 'inline-source-map',
         plugins: [
             //            new CleanWebpackPlugin(),
         ],

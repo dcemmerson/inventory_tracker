@@ -31,6 +31,7 @@ export default function App(props) {
   const [sortAsc, setSortAsc] = useState(true);
   const [sortBy, setSortBy] = useState("byDaysLeft");
   const [timer, setTimer] = useState(null);
+  const [fetchError, setFetchError] = useState(true);
 
   const userEditingRef = React.useRef(userEditing);
   userEditingRef.current = userEditing;
@@ -206,11 +207,12 @@ export default function App(props) {
         .then(normalizedInventory => {
           console.log('normainv = ');
           console.log(normalizedInventory);
-
+          setFetchError(false);
           return normalizedInventory;
         })
         .catch(err => {
           console.log(err);
+          setFetchError(true);
         })
     }
     else {
