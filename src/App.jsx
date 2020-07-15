@@ -44,6 +44,8 @@ export default function App(props) {
     fetchInventory();
   }, [loggedIn]);
 
+
+
   useEffect(() => {
     if (!loading && !updating && loggedIn) {
       const sortedInventory = deepCopy(inventory);
@@ -184,7 +186,7 @@ export default function App(props) {
     return inv.data.sort(getSortMethod(sortBy, sortAsc));
   }
 
-  function retryFetchInventory(interval=RETRY_REQUEST_WAIT) {
+  function retryFetchInventory(interval = RETRY_REQUEST_WAIT) {
     setTimer(createFetchTimer());
 
   }
@@ -251,7 +253,7 @@ export default function App(props) {
     }
   }
 
-  function fetchInventory(isUserEditing=false, isUpdating) {
+  function fetchInventory(isUserEditing = false, isUpdating) {
     if (!loggedIn) {
       return;
     }
@@ -268,7 +270,7 @@ export default function App(props) {
       setUpdating(true);
       getInventory(identity.user.token.access_token)
         .then(inventory => {
-          if(inventory.loggedIn === false) { //check for false, not just truthiness.
+          if (inventory.loggedIn === false) { //check for false, not just truthiness.
             setLoggedIn(false);
             throw new Error(inventory);
           }
@@ -289,10 +291,10 @@ export default function App(props) {
     }
   }
 
-  function createFetchTimer(interval=DEFAULT_FETCH_TIMER) {
+  function createFetchTimer(interval = DEFAULT_FETCH_TIMER) {
 
     return window.setTimeout(() => {
-      fetchInventory(userEditingRef.current, updatingRef.current); 
+      fetchInventory(userEditingRef.current, updatingRef.current);
     }, interval);
   }
 
