@@ -14,6 +14,7 @@ const ASCII_CODE_DECIMAL = 46;
 const ASCII_CODE_ZERO = 48;
 const ASCII_CODE_NINE = 57;
 const DEFAULT_FETCH_TIMER = 60 * 1000 * 2; // 2 minutes
+const RETRY_REQUEST_WAIT = 60 * 1000; // 1 minute
 
 export default function App(props) {
   const identity = useIdentityContext()
@@ -172,6 +173,7 @@ export default function App(props) {
     console.log('unnormalized inv = ');
     console.log(inv);
     if (!inv.data) {
+      retryFetchInventory(RETRY_REQUEST_WAIT);
       throw new Error(`No inventory.data: ${inv.msg}`);
     }
     inv.data = inv.data.map(item => {
@@ -182,6 +184,10 @@ export default function App(props) {
     return inv.data.sort(getSortMethod(sortBy, sortAsc));
   }
 
+  function retryFetchInventory(interval=RETRY_REQUEST_WAIT) {
+    setTimer(createFetchTimer());
+
+  }
   function setItemEditMode(itemId, editMode = true) {
     const newInventory = inventory.map(item => {
       if (item.data.id === itemId && !item.deleteItem) {
@@ -283,11 +289,11 @@ export default function App(props) {
     }
   }
 
-  function createFetchTimer() {
+  function createFetchTimer(interval=DEFAULT_FETCH_TIMER) {
 
     return window.setTimeout(() => {
       fetchInventory(userEditingRef.current, updatingRef.current); 
-    }, DEFAULT_FETCH_TIMER);
+    }, interval);
   }
 
   return (
