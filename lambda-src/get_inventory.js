@@ -26,12 +26,14 @@ exports.handler = async function (event, context) {
 
     let results;
     if (user) {
-
+        let start = new Date();
         try {
             results = tallyInventory(await getInventory(context));
         }
         catch (err) {
             results = err;
+            results.start = start;
+            results.end = new Date();
         }
         finally {
             return {
