@@ -53,7 +53,7 @@ async function updateItemInDb (data, currentTimestamp) {
     try {
         //Fire off db update but don't worry about waiting to
         // check if it returned.
-        client.query(query);
+        await client.query(query);
 
     }
     catch (err) {
