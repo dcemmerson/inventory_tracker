@@ -47,6 +47,7 @@ exports.handler = async function (event, context) {
             headers,
             body: JSON.stringify({
                 msg: 'not logged in',
+                loggedIn: false,
                 context: context,
             }),
         };

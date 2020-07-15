@@ -87,6 +87,7 @@ export function Inventory(props) {
                                     onClick={props.handleCancelEdits}>Cancel</button>
                                 <div className={"spinner-border text-secondary spinner-sm " + (props.loading || props.updating ? "d-block" : "d-none")}></div>
                             </div>
+                            <div className={(props.fetchError ? "d-block" : "d-none")}>Unable to update inventory. <a href="/">Refresh page</a></div>
                             <div className="addItemRow mr-4 mt-2" onClick={props.addItemRow}></div>
                         </div>
                     </div>

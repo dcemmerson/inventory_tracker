@@ -262,16 +262,23 @@ export default function App(props) {
       setUpdating(true);
       getInventory(identity.user.token.access_token)
         .then(inventory => {
+          if(inventory.loggedIn === false) { //check for false, not just truthiness.
+            setLoggedIn(false);
+            throw new Error(inventory);
+          }
           console.log(inventory);
           setInventory(inventory);
           setPrevInventory(deepCopy(inventory));
-          setLoading(false);
-          setUpdating(false);
+
           setTimer(createFetchTimer());
           console.log(new Date());
         })
         .catch(err => {
           console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+          setUpdating(false);
         })
     }
   }
@@ -295,6 +302,7 @@ export default function App(props) {
         handleSaveEdits={handleSaveEdits}
         loading={loading}
         updating={updating}
+        fetchError={fetchError}
         saving={saving}
         addItemRow={addItemRow}
         removeItemRow={removeItemRow}

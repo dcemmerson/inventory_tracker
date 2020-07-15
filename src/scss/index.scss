@@ -279,6 +279,6 @@ body {
     }
 }
 
-button {
-    box-shadow: none;
+button:focus {
+    box-shadow: none !important;
 }

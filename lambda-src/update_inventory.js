@@ -48,6 +48,7 @@ exports.handler = async function (event, context) {
             .catch(err => {
                 return {
                     success: false,
+                    loggedIn: true,
                     error: err,
                 };
             })
@@ -64,6 +65,7 @@ exports.handler = async function (event, context) {
             headers,
             body: JSON.stringify({
                 msg: 'not logged in',
+                loggedIn: false,
                 context: context,
             }),
         };
