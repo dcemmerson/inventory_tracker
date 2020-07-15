@@ -10,6 +10,8 @@ body {
         display: grid;
         grid-template-rows: auto 1fr auto;
 
+
+
         .loadingMessage {
             color: $green;
             background-color: $gray;
@@ -209,7 +211,7 @@ body {
     transition: opacity 0.25s;
 }
 
-body:hover {
+.tableContainer:hover {
     .sort::after {
         opacity: 100%;
     }
@@ -222,6 +224,15 @@ body:hover {
     .addItemRow::before {
         opacity: 100%;
     }
+}
+.loginButtonContainer:hover {
+    .btn-cust.logout {
+        opacity: 100%;
+    }
+}
+.btn-cust.logout {
+    opacity: 0%;
+    transition: opacity 1s;
 }
 .btn-cust{
     color: $green;

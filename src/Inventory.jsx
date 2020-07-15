@@ -14,7 +14,7 @@ export function Inventory(props) {
                 <div className="row justify-content-center">
                     <div className="col-12 col-lg-10 col-xl-8">
                         <div className="d-flex">
-                            <div className={"tableCover" + ((props.loading || props.updating) ? " w-100" : " w-0")}></div>
+                            <div className={"tableCover" + ((props.loading || props.saving) ? " w-100" : " w-0")}></div>
                             <table>
                                 <thead>
                                     <tr>

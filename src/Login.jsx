@@ -11,8 +11,9 @@ export function Login(props) {
 
   return (
     <>
-      <div className="mt-3 ml-4">
-        <button className="btn btn-sm btn-cust" onClick={() => setDialog(!dialog)}>
+      <div className="mt-3 ml-4 loginButtonContainer">
+        <button className={"btn btn-sm btn-cust" + (isLoggedIn ? " logout" : "")}
+         onClick={() => setDialog(!dialog)}>
           {isLoggedIn ? "LOG OUT" : "LOG IN"}
         </button>
       </div>

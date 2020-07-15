@@ -46,6 +46,7 @@ export function Main(props) {
           handleSaveEdits={props.handleSaveEdits}
           loading={props.loading}
           updating={props.updating}
+          saving={props.saving}
           addItemRow={props.addItemRow}
           removeItemRow={props.removeItemRow}
           sortItems={props.sortItems}

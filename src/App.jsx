@@ -13,32 +13,33 @@ const DEFAULT_START_BURN_RATE = 1;
 const ASCII_CODE_DECIMAL = 46;
 const ASCII_CODE_ZERO = 48;
 const ASCII_CODE_NINE = 57;
+const DEFAULT_FETCH_TIMER = 60 * 1000 * 2; // 2 minutes
 
 export default function App(props) {
   const identity = useIdentityContext()
   const [inventory, setInventory] = useState([]);
   const [prevInventory, setPrevInventory] = useState([]);
   const [loggedIn, setLoggedIn] = useState(identity && identity.isLoggedIn);
+  //State when loading inventory from server for the first time.
   const [loading, setLoading] = useState(true);
+  //State when we make timed interval request to retrieve updates form server.
   const [updating, setUpdating] = useState(false);
+  //State when user selects save button and we send updated inventory to server, but before we hear back from server.     
+  const [saving, setSaving] = useState(false);
+  //State when user is actively editing inventory in table.
+  const [userEditing, setUserEditing] = useState(false);
   const [sortAsc, setSortAsc] = useState(true);
   const [sortBy, setSortBy] = useState("byDaysLeft");
+  const [timer, setTimer] = useState(null);
+
+  const userEditingRef = React.useRef(userEditing);
+  userEditingRef.current = userEditing;
+  const updatingRef = React.useRef(updating);
+  updatingRef.current = updating;
+
 
   useEffect(() => {
-    if (loggedIn) {
-      setLoading(true);
-      getInventory(identity.user.token.access_token)
-        .then(inventory => {
-          console.log(inventory);
-          setInventory(inventory);
-          setPrevInventory(deepCopy(inventory));
-          setLoading(false);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
-
+    fetchInventory();
   }, [loggedIn]);
 
   useEffect(() => {
@@ -97,22 +98,26 @@ export default function App(props) {
   }
 
   function handleCancelEdits() {
+    setUserEditing(false);
     setInventory(deepCopy(prevInventory));
   }
 
   function handleSaveEdits() {
-    setUpdating(true);
+    setSaving(true);
+    setUserEditing(false);
+
     updateInventory(inventory, identity.user.token.access_token)
       .then(updatedInventory => {
         setInventory(updatedInventory);
         setPrevInventory(deepCopy(updatedInventory));
 
-        setUpdating(false);
+        setSaving(false);
       })
 
   }
 
   function addItemRow() {
+    setUserEditing(true);
     let newItemId = -1;
 
     inventory.forEach(item => {
@@ -180,6 +185,7 @@ export default function App(props) {
     const newInventory = inventory.map(item => {
       if (item.data.id === itemId && !item.deleteItem) {
         item.editMode = true;
+        setUserEditing(true);
       }
       return item;
     });
@@ -237,27 +243,46 @@ export default function App(props) {
     }
   }
 
-  function insertInventory(id, name = "testName", quantity = 12, burnRate = 2) {
-    return fetch(`/.netlify/functions/insert_inventory`, {
-      method: 'POST',
-      body: JSON.stringify({
-        id: id,
-        name: name,
-        quantity: quantity,
-        burnRate: burnRate
-      })
-    })
-      .then(inventory => {
-        console.log(inventory);
-        return inventory;
-      })
-      .then(res => res.json())
-      .then(results => console.log(results))
+  function fetchInventory(isUserEditing=false, isUpdating) {
+    if (!loggedIn) {
+      return;
+    }
+    else if (isUpdating || isUserEditing) {
+      console.log('skipping get inventory')
+      window.clearTimeout(timer);
+      setTimer(createFetchTimer());
+    }
+    else {
+      console.log('user edditing = ' + userEditing)
+      if (timer) {
+        window.clearTimeout(timer);
+      }
+      setUpdating(true);
+      getInventory(identity.user.token.access_token)
+        .then(inventory => {
+          console.log(inventory);
+          setInventory(inventory);
+          setPrevInventory(deepCopy(inventory));
+          setLoading(false);
+          setUpdating(false);
+          setTimer(createFetchTimer());
+          console.log(new Date());
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
   }
 
+  function createFetchTimer() {
+
+    return window.setTimeout(() => {
+      fetchInventory(userEditingRef.current, updatingRef.current); 
+    }, DEFAULT_FETCH_TIMER);
+  }
 
   return (
-    <div>
+    <main id="main">
       <Main
         inventory={inventory}
         setItemEditMode={setItemEditMode}
@@ -268,11 +293,12 @@ export default function App(props) {
         handleSaveEdits={handleSaveEdits}
         loading={loading}
         updating={updating}
+        saving={saving}
         addItemRow={addItemRow}
         removeItemRow={removeItemRow}
         sortItems={sortItems}
       />
-    </div>
+    </main>
 
   );
 }
