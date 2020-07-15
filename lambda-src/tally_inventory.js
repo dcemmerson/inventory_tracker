@@ -51,7 +51,6 @@ async function updateItemInDb (data, currentTimestamp) {
 
     try {
         return await client.query(query);
-
     }
     catch (err) {
         return err;

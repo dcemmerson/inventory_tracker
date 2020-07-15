@@ -20,7 +20,7 @@ export default function App(props) {
   const identity = useIdentityContext()
   const [inventory, setInventory] = useState([]);
   const [prevInventory, setPrevInventory] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(identity && identity.isLoggedIn);
+//  const [loggedIn, setLoggedIn] = useState(identity && identity.isLoggedIn);
   //State when loading inventory from server for the first time.
   const [loading, setLoading] = useState(true);
   //State when we make timed interval request to retrieve updates form server.
@@ -39,12 +39,11 @@ export default function App(props) {
   const updatingRef = React.useRef(updating);
   updatingRef.current = updating;
 
+  const loggedIn = identity && identity.isLoggedIn;
 
   useEffect(() => {
     fetchInventory();
   }, [loggedIn]);
-
-
 
   useEffect(() => {
     if (!loading && !updating && loggedIn) {
@@ -271,7 +270,7 @@ export default function App(props) {
       getInventory(identity.user.token.access_token)
         .then(inventory => {
           if (inventory.loggedIn === false) { //check for false, not just truthiness.
-            setLoggedIn(false);
+            identity.logoutUser();
             throw new Error(inventory);
           }
           console.log(inventory);
@@ -303,7 +302,6 @@ export default function App(props) {
       <Main
         inventory={inventory}
         setItemEditMode={setItemEditMode}
-        setLoggedIn={setLoggedIn}
         handleNumericInput={handleNumericInput}
         handleStringInput={handleStringInput}
         handleCancelEdits={handleCancelEdits}
