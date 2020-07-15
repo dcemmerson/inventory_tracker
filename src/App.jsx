@@ -212,6 +212,10 @@ export default function App(props) {
         .then(res => res.json())
         .then(normalizeInventoryData)
         .then(normalizedInventory => {
+          if (inventory.loggedIn === false) { //check for false, not just truthiness.
+            identity.logoutUser();
+            throw new Error(inventory);
+          }
           console.log('normainv = ');
           console.log(normalizedInventory);
           setFetchError(false);
