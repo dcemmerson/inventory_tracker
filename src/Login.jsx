@@ -22,8 +22,8 @@ export function Login(props) {
         <IdentityModal
           showDialog={dialog}
           onCloseDialog={() => setDialog(!dialog)}
-          onLogin={() => props.setLoggedIn(true)}
-          onLogout={() => props.setLoggedIn(false)}
+          onLogin={() => setDialog(false)}
+          onLogout={() => setDialog(true)}
         />
       </React.Suspense>
     </>
