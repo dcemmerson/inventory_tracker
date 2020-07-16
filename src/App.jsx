@@ -4,8 +4,6 @@ import { useIdentityContext } from "react-netlify-identity-widget";
 import { Main } from './Main.jsx';
 import { deepCopy, getSortMethod } from './utility';
 
-import './App.css';
-
 const DEFAULT_START_QUANTITY = 10;
 const DEFAULT_START_NAME = "New item";
 const DEFAULT_START_BURN_RATE = 1;
@@ -19,7 +17,7 @@ export default function App(props) {
   const identity = useIdentityContext()
   const [inventory, setInventory] = useState([]);
   const [prevInventory, setPrevInventory] = useState([]);
-//  const [loggedIn, setLoggedIn] = useState(identity && identity.isLoggedIn);
+  //  const [loggedIn, setLoggedIn] = useState(identity && identity.isLoggedIn);
   //State when loading inventory from server for the first time.
   const [loading, setLoading] = useState(true);
   //State when we make timed interval request to retrieve updates form server.
@@ -37,9 +35,14 @@ export default function App(props) {
   userEditingRef.current = userEditing;
   const updatingRef = React.useRef(updating);
   updatingRef.current = updating;
-
-  const loggedIn = identity && identity.isLoggedIn;
-
+  
+  let loggedIn = identity && identity.isLoggedIn;
+  useEffect(() => {
+    if(loggedIn && (!identity.user || !identity.user.token ||
+      !identity.user.token.access_token)){
+        loggedIn = false;
+      }
+  })
   useEffect(() => {
     fetchInventory();
   }, [loggedIn]);
@@ -60,6 +63,10 @@ export default function App(props) {
       setSortBy(changeToSort);
       setSortAsc(true);
     }
+  }
+
+  async function getNewToken() {
+    return await identity.getFreshJWT();
   }
 
   function handleNumericInput(itemId, e) {
@@ -316,6 +323,7 @@ export default function App(props) {
         addItemRow={addItemRow}
         removeItemRow={removeItemRow}
         sortItems={sortItems}
+        loggedIn={loggedIn}
       />
     </main>
 

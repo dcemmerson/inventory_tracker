@@ -1,6 +1,6 @@
 import React from 'react';
-import "react-netlify-identity-widget/styles.css";
-import { useIdentityContext } from "react-netlify-identity-widget";
+//import "react-netlify-identity-widget/styles.css";
+//import { useIdentityContext } from "react-netlify-identity-widget";
 //import { netlifyIdentity } from "react-netlify-identity";
 
 import { Inventory } from "./Inventory.jsx";
@@ -9,14 +9,14 @@ import { LoadMessage } from "./LoadMessage.jsx";
 
 
 export function Main(props) {
-  const identity = useIdentityContext()
-  const isLoggedIn = identity && identity.isLoggedIn
+  //  const identity = props.loggedIn;//useIdentityContext()
+  const isLoggedIn = props.loggedIn;//identity && identity.isLoggedIn
 
   function loadingView() {
     return (
       <>
         <Login
-          setLoggedIn={props.setLoggedIn}
+          loggedIn={props.loggedIn}
         />
         <LoadMessage />
       </>
@@ -26,7 +26,7 @@ export function Main(props) {
   function loginView() {
     return (
       <Login
-        setLoggedIn={props.setLoggedIn}
+        loggedIn={props.loggedIn}
       />
     );
   }
@@ -34,9 +34,9 @@ export function Main(props) {
   function loadedView() {
     return (
       <>
-        { <Login 
-          setLoggedIn={props.setLoggedIn}
-        /> }
+        <Login
+          loggedIn={props.loggedIn}
+        />
         <Inventory
           inventory={props.inventory}
           setItemEditMode={props.setItemEditMode}
