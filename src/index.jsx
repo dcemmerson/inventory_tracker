@@ -29,7 +29,6 @@ ReactDOM.render(
 function fullScreen() {
   const main = document.getElementById('main');
   const isInFullScreen = document.fullscreen;
-  console.log("double");
   if (!isInFullScreen) {
     if (main.requestFullscreen) {
       main.requestFullscreen();

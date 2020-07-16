@@ -10,7 +10,7 @@ export function Inventory(props) {
 
     return (
         <div className="container-fluid">
-            <div className={"tableContainer my-5 " + (isLoggedIn ? 'd-block' : 'd-none')}>
+            <div className={"tableContainer my-2 my-md-3 my-lg-5 " + (isLoggedIn ? 'd-block' : 'd-none')}>
                 <div className="row justify-content-center">
                     <div className="col-12 col-lg-10 col-xl-8">
                         <div className="d-flex">

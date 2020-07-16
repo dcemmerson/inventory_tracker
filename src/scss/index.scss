@@ -4,6 +4,8 @@ $offwhite: #f0f0f0;
 $danger: #820000;
 
 body {
+    font-family: 'Inconsolata', monospace;
+
     #root {
         background-color: $gray;//rgba(0, 0, 0, 0.75);
         min-height: 100vh;

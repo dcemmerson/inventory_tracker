@@ -8019,8 +8019,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! dotenv */ "../node_modules/dotenv/lib/main.js").config();
 
-const SECONDS_PER_DAY = 60 * 2; //60 * 60 * 24;
-
+const SECONDS_PER_DAY = 60 * 60 * 24;
 const q = faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.query;
 const client = new faunadb__WEBPACK_IMPORTED_MODULE_0___default.a.Client({
   secret: process.env.DB_SERVER_KEY
