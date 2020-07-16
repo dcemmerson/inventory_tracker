@@ -1,7 +1,5 @@
 import React from 'react';
-//import "react-netlify-identity-widget/styles.css";
-import { useIdentityContext } from "react-netlify-identity-widget";
-//import { netlifyIdentity } from "react-netlify-identity";
+import { useIdentityContext } from "react-netlify-identity";
 
 import { Inventory } from "./Inventory.jsx";
 import { Login } from "./Login.jsx";
