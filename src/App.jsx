@@ -15,7 +15,6 @@ const RETRY_REQUEST_WAIT = 60 * 1000; // 1 minute
 
 export default function App(props) {
   const identity = useIdentityContext()
-  const { user } = useIdentityContext();
   const [inventory, setInventory] = useState([]);
   const [prevInventory, setPrevInventory] = useState([]);
 //  const [loggedIn, setLoggedIn] = useState(identity && identity.isLoggedIn);
@@ -59,10 +58,6 @@ export default function App(props) {
       setSortBy(changeToSort);
       setSortAsc(true);
     }
-  }
-
-  async function getNewToken() {
-    return await identity.getFreshJWT();
   }
 
   function handleNumericInput(itemId, e) {
@@ -293,12 +288,10 @@ export default function App(props) {
       return;
     }
     else if (isUpdating || isUserEditing) {
-      console.log('skipping get inventory')
       window.clearTimeout(timer);
       setTimer(createFetchTimer());
     }
     else {
-      console.log('user edditing = ' + userEditing)
       if (timer) {
         window.clearTimeout(timer);
       }
