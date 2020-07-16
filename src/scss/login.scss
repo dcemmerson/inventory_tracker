@@ -1,0 +1,70 @@
+$gray: #999;
+$dark-gray: #222;
+$green: #5ac84d;
+
+
+.modal-dialog {
+    max-width: 400px !important;
+}
+.modal-content {
+    border: 0.25rem solid rgba(125,125,125,0.75);
+    box-shadow: 0 0 0.25rem rgba(125,125,125,0.75); 
+}
+
+.emailIcon {
+    display: inline-block;
+    background-image: url(../images/envelope.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 65%;
+}
+
+.lockIcon {
+    display: inline-block;
+    background-image: url(../images/lock.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 65%;
+}
+
+.userIcon {
+    display: inline-block;
+    background-image: url(../images/user.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 65%;
+}
+
+a[aria-selected="true"] {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 0.2rem solid $dark-gray !important;
+}
+a[aria-selected="false"] {
+    color: $gray !important;
+    border-bottom: 0.2rem solid $gray !important;
+}
+a[aria-selected="false"]:hover {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+.form-control:focus {
+    border-color: $green !important;
+    box-shadow: 0 0 0 0.2rem rgba($green, 0.25) !important;
+}
+
+button:focus {
+    box-shadow: 0 0 0 0.2 rgba($green, 0.25) !important;
+}
+
+.spinner-sm {
+    font-size: 0.7rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+.modal-header {
+    border-bottom: none !important;
+}

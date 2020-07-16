@@ -15,9 +15,10 @@ const RETRY_REQUEST_WAIT = 60 * 1000; // 1 minute
 
 export default function App(props) {
   const identity = useIdentityContext()
+  const { user } = useIdentityContext();
   const [inventory, setInventory] = useState([]);
   const [prevInventory, setPrevInventory] = useState([]);
-  //  const [loggedIn, setLoggedIn] = useState(identity && identity.isLoggedIn);
+//  const [loggedIn, setLoggedIn] = useState(identity && identity.isLoggedIn);
   //State when loading inventory from server for the first time.
   const [loading, setLoading] = useState(true);
   //State when we make timed interval request to retrieve updates form server.
@@ -31,29 +32,24 @@ export default function App(props) {
   const [timer, setTimer] = useState(null);
   const [fetchError, setFetchError] = useState(true);
 
+  const isLoggedIn = identity && identity.isLoggedIn;
   const userEditingRef = React.useRef(userEditing);
   userEditingRef.current = userEditing;
   const updatingRef = React.useRef(updating);
   updatingRef.current = updating;
   
-  let loggedIn = identity && identity.isLoggedIn;
-  useEffect(() => {
-    if(loggedIn && (!identity.user || !identity.user.token ||
-      !identity.user.token.access_token)){
-        loggedIn = false;
-      }
-  })
-  useEffect(() => {
-    fetchInventory();
-  }, [loggedIn]);
 
   useEffect(() => {
-    if (!loading && !updating && loggedIn) {
+    fetchInventory();
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (!loading && !updating && isLoggedIn) {
       const sortedInventory = deepCopy(inventory);
       sortedInventory.sort(getSortMethod(sortBy, sortAsc));
       setInventory(sortedInventory);
     }
-  }, [sortBy, sortAsc, loading, updating, loggedIn]);
+  }, [sortBy, sortAsc, loading, updating, isLoggedIn]);
 
   function sortItems(changeToSort) {
     if (sortBy === changeToSort) {
@@ -206,8 +202,38 @@ export default function App(props) {
     setInventory(newInventory);
   }
 
-  function getInventory(token) {
-    if (loggedIn) {
+  // function getInventory(token) {
+  //   if (isLoggedIn) {
+  //     return fetch(`/.netlify/functions/get_inventory`, {
+  //       method: 'GET',
+  //       cache: "no-store",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       }
+  //     })
+  //       .then(res => res.json())
+  //       .then(normalizeInventoryData)
+  //       .then(normalizedInventory => {
+  //         if (inventory.loggedIn === false) { //check for false, not just truthiness.
+  //           identity.logoutUser();
+  //           throw new Error(inventory);
+  //         }
+  //         console.log('normainv = ');
+  //         console.log(normalizedInventory);
+  //         setFetchError(false);
+  //         return normalizedInventory;
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //         setFetchError(true);
+  //       })
+  //   }
+  //   else {
+  //     return [];
+  //   }
+  // }
+    function getInventory(token) {
+    if (isLoggedIn) {
       return fetch(`/.netlify/functions/get_inventory`, {
         method: 'GET',
         cache: "no-store",
@@ -238,7 +264,7 @@ export default function App(props) {
   }
 
   function updateInventory(edittedInventory, token) {
-    if (loggedIn) {
+    if (isLoggedIn) {
       return fetch(`/.netlify/functions/update_inventory`, {
         method: 'POST',
         cache: "no-store",
@@ -263,7 +289,7 @@ export default function App(props) {
   }
 
   function fetchInventory(isUserEditing = false, isUpdating) {
-    if (!loggedIn) {
+    if (!isLoggedIn) {
       return;
     }
     else if (isUpdating || isUserEditing) {
@@ -323,7 +349,6 @@ export default function App(props) {
         addItemRow={addItemRow}
         removeItemRow={removeItemRow}
         sortItems={sortItems}
-        loggedIn={loggedIn}
       />
     </main>
 

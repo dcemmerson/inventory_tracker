@@ -1,6 +1,6 @@
 import React from 'react';
 //import "react-netlify-identity-widget/styles.css";
-//import { useIdentityContext } from "react-netlify-identity-widget";
+import { useIdentityContext } from "react-netlify-identity-widget";
 //import { netlifyIdentity } from "react-netlify-identity";
 
 import { Inventory } from "./Inventory.jsx";
@@ -9,14 +9,13 @@ import { LoadMessage } from "./LoadMessage.jsx";
 
 
 export function Main(props) {
-  //  const identity = props.loggedIn;//useIdentityContext()
-  const isLoggedIn = props.loggedIn;//identity && identity.isLoggedIn
+  const identity = useIdentityContext();
+  const isLoggedIn = identity && identity.isLoggedIn;
 
   function loadingView() {
     return (
       <>
         <Login
-          loggedIn={props.loggedIn}
         />
         <LoadMessage />
       </>
@@ -26,7 +25,6 @@ export function Main(props) {
   function loginView() {
     return (
       <Login
-        loggedIn={props.loggedIn}
       />
     );
   }
@@ -35,7 +33,6 @@ export function Main(props) {
     return (
       <>
         <Login
-          loggedIn={props.loggedIn}
         />
         <Inventory
           inventory={props.inventory}

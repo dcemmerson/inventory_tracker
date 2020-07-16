@@ -6,6 +6,10 @@ import './images/plus--green.png';
 import './images/sort--down.png';
 import './images/sort--up.png';
 import './images/sort.png';
+import './images/envelope.svg';
+import './images/lock.svg';
+import './images/user.svg';
+
 
 import "@reach/tabs/styles.css";
 import './scss/index.scss';
