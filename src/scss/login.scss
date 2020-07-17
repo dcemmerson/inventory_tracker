@@ -68,3 +68,8 @@ button:focus {
 .modal-header {
     border-bottom: none !important;
 }
+.loginButtonContainer:hover {
+    .btn-cust.logout {
+        opacity: 100%;
+    }
+}
