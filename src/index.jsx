@@ -14,7 +14,7 @@ import './scss/index.scss';
 import App from './App.jsx';
 //import * as serviceWorker from './serviceWorker';
 
-const URL = 'https://skyeparker.netlify.app/'
+const URL = 'https://inventorytracker.netlify.app/'
 
 ReactDOM.render(
   <React.StrictMode>
