@@ -1,3 +1,7 @@
+/// filename: index.jsx
+/// last modified: 07/30/2020
+/// description: Entry point for inventory tracker app.
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IdentityContextProvider } from "react-netlify-identity"
@@ -12,9 +16,8 @@ import './images/user.svg';
 
 import './scss/index.scss';
 import App from './App.jsx';
-//import * as serviceWorker from './serviceWorker';
 
-const URL = 'https://inventorytracker.netlify.app/'
+const URL = 'https://skyeparker.netlify.app/'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -27,7 +30,9 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-//serviceWorker.unregister();
+/// name: fullScreen
+/// description: Callback method to enter full screen when
+///   user double clicks on/around inventory table.
 function fullScreen() {
   const main = document.getElementById('main');
   const isInFullScreen = document.fullscreen;

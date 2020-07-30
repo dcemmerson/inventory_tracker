@@ -15,7 +15,7 @@ module.exports = [
             },
         },
         name: 'js',
-         mode: 'production',
+        mode: 'production',
 //        mode: 'development',
         resolve: {
             alias: {

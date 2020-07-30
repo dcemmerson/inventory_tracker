@@ -1,3 +1,9 @@
+/// filename: LoaMessage.jsx
+///	last modified: 07/30/2020
+///	description: Stateful component that provides fallback
+///		widget to display on screen while database info is being
+///		loaded.
+
 import React, { useState } from 'react';
 
 import { useIdentityContext } from "react-netlify-identity";
@@ -37,6 +43,7 @@ export function Login(props) {
         setSubmitting(false);
       })
   }
+
   function submitSignUp(e) {
     e.preventDefault();
     e.target.disabled = true;

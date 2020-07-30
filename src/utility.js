@@ -1,10 +1,17 @@
-/*  name: deepCopy
-    description: Perform deep copy of object/array passed in. Should 
-                    be used to copy object coming out of db. This method
-                    also ensure we do not attempt to make copies of new
-                    photos that user tried to add, but did not upload 
-                    and actual photo.
-*/
+/// filename: utility.js
+/// last modified: 07/30/2020
+/// description: Utility functions used across the app, including a custom
+///     deep copy method and sorting methods used to sort by various
+///     column values.
+
+
+/// name: deepCopy
+/// description: Perform deep copy of object/array passed in. Should 
+///     be used to copy object coming out of db. This method
+///     also ensure we do not attempt to make copies of new
+///     photos that user tried to add, but did not upload 
+///     and actual photo.
+
 export function deepCopy(current) {
     //Remember, typof null === "object" in js.
     if (typeof current !== "object" || current === null) return current;
@@ -17,6 +24,8 @@ export function deepCopy(current) {
     return next;
 }
 
+/// name: getSortMethod
+/// description: Return appropriate sort function.
 export function getSortMethod(sortBy, asc = true) {
     if (sortBy === "byQuantity") {
         return byQuantity(asc);
@@ -32,6 +41,8 @@ export function getSortMethod(sortBy, asc = true) {
     }
 }
 
+/// name: byQuantity
+/// description: Define how to sort columns by quantity left.
 function byQuantity(asc = true) {
     let sortDir = 1;
     if (!asc) sortDir = -1;
@@ -52,6 +63,8 @@ function byQuantity(asc = true) {
     }
 }
 
+/// name: byDaysLeft
+/// description: Define how to sort columns by days left.
 function byDaysLeft(asc = true) {
     let sortDir = 1;
     if (!asc) sortDir = -1;
@@ -72,6 +85,9 @@ function byDaysLeft(asc = true) {
     }
 }
 
+/// name: byBurnRate
+/// description: Define how to sort columns by "burn rate" which is 
+///     user defined quantity of items used per day.
 function byBurnRate(asc = true) {
     let sortDir = 1;
     if (!asc) sortDir = -1;
@@ -90,9 +106,10 @@ function byBurnRate(asc = true) {
             return 1 * sortDir;
         }
     }
-
 }
 
+/// name: byName
+/// description: Define how to sort columns by item name.
 function byName(asc = true) {
     let sortDir = 1;
     if (!asc) sortDir = -1;
@@ -108,7 +125,6 @@ function byName(asc = true) {
             return 1 * sortDir;
         }
     }
-
 }
 
 export function reverseArray(arr) {

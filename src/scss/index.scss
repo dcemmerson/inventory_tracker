@@ -1,13 +1,19 @@
+/// filename: login.scss
+/// last modified: 07/30/2020
+/// description: Styles used for styling app, specifically 
+///     pertaining to inventory table and not login.
+
 $green: #5ac84d;
 $gray: #383838;
 $offwhite: #f0f0f0;
 $danger: #820000;
 
+
 body {
     font-family: 'Inconsolata', monospace;
 
     #root {
-        background-color: $gray;//rgba(0, 0, 0, 0.75);
+        background-color: $gray;
         min-height: 100vh;
         display: grid;
         grid-template-rows: auto 1fr auto;
@@ -25,7 +31,6 @@ body {
                 background-color: rgba(0, 0, 0, 0.9);
                 width: 0%;
                 height: 100%;
-                // -webkit-transition: width 0.3s;
                 transition: width 0.3s;
             }
             table {
@@ -34,14 +39,12 @@ body {
                 text-align: center;
                 color: $green;
                 background-color: $gray;
-                // box-shadow: 0 0 10px #222222;
                 th {
                     font-weight: 650;
                     padding: 0.35rem;
                 }
                 td {
                     padding: 0.25rem;
-                    // -webkit-transition: display 1s;
                     transition: display 1s;
                     font-weight: 500;
                 }
@@ -58,7 +61,6 @@ body {
                         display: none;
                     }
                 }
-
             }
             .deletedRow {
                 background-color: $danger;
@@ -92,9 +94,9 @@ body {
     position: relative;
     left: 0.5rem;
     opacity: 0%;
-    // -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
+
 .sort--up::after {
     content: "";
 
@@ -109,9 +111,9 @@ body {
     position: relative;
     left: 0.5rem;
     opacity: 0%;
-    // -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
+
 .sort--down::after {
     content: "";
 
@@ -126,9 +128,9 @@ body {
     position: relative;
     left: 0.5rem;
     opacity: 0%;
-    // -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
+
 .addItemRow::before {
     content: "";
     background-image: url(../images/plus--green.png);
@@ -141,9 +143,9 @@ body {
     display: inline-block;
     position: relative;
     opacity: 0%;
-    // -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
+
 .deleteItemRow::before {
     content: "";
 
@@ -157,24 +159,29 @@ body {
     position: absolute;
     margin-top: 0.3rem;
     opacity: 100%;
-    // -webkit-transition: opacity 1s;
     transition: opacity 1s, right 0.5s, left 0.5s;
 }
+
+// Media queries pertaining to placement of delete row 
+// icon button.
 @media (max-width: 600px) {
     .deleteItemRow::before {
         right: 3rem;
     }
 }
+
 @media (max-width: 760px) {
     .deleteItemRow::before {
         right: 4rem;
     }
 }
+
 @media (min-width: 760px) and (max-width: 992px) {
     .deleteItemRow::before {
         left: 1.2rem;
     }
 }
+
 @media (min-width: 992px) {
     .deleteItemRow::before {
         left: -0.8rem;
@@ -184,32 +191,27 @@ body {
 .sort:hover {
     cursor: pointer;
     opacity: 50%;
-    // -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 .sort--down:hover {
     cursor: pointer;
     opacity: 50%;
-    // -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 .sort--up:hover {
     cursor: pointer;
     opacity: 50%;
-    // -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 .addItemRow:hover {
     cursor: pointer;
     opacity: 50%;
-    // -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 .deleteItemRow:hover::before,
 .deleteItemRowMobile:hover {
     cursor: pointer;
     opacity: 50%;
-    // -webkit-transition: opacity 0.25s;
     transition: opacity 0.25s;
 }
 
@@ -242,7 +244,6 @@ body {
     font-weight: 550;
     border: 0.15rem solid $green;
     border-radius: 2.5px;
-    // -webkit-transition: background-color 0.5s, color 0.5s;
     transition: background-color 0.5s, color 0.5s;
 }
 .btn-cust:hover {
@@ -269,6 +270,8 @@ body {
     height: 0%;
 }
 
+// Used when deletes a row but hasn't saved the deletion (to prevent
+// user from accidentally making breaking changes).
 @keyframes blinking {
     0% {
         opacity: 1;

@@ -1,3 +1,9 @@
+/// filename: Main.jsx
+///	last modified: 07/30/2020
+///	description: Stateless component which decides to render
+///   between the login modal or the actual inventory table
+///   (if user is already logged in).
+
 import React from 'react';
 import { useIdentityContext } from "react-netlify-identity";
 

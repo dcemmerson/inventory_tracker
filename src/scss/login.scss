@@ -1,3 +1,7 @@
+/// filename: login.scss
+/// last modified: 07/30/2020
+/// description: Styles used for login modal.
+
 $gray: #999;
 $dark-gray: #222;
 $green: #5ac84d;
@@ -51,6 +55,7 @@ a[aria-selected="false"]:hover {
     border-left: none !important;
     border-right: none !important;
 }
+
 .form-control:focus {
     border-color: $green !important;
     box-shadow: 0 0 0 0.2rem rgba($green, 0.25) !important;
@@ -69,28 +74,32 @@ button:focus {
 .modal-header {
     border-bottom: none !important;
 }
+
 .loginButtonContainer:hover {
     .btn-cust.logout {
         opacity: 100%;
     }
 }
+
 .btn-cust.logout {
     opacity: 0%;
     transition: opacity 1s;
 }
+
 .btn-cust{
     color: $green;
     background-color: rgba(0, 0, 0, 0);
     font-weight: 550;
     border: 0.15rem solid $green;
     border-radius: 2.5px;
-    // -webkit-transition: background-color 0.5s, color 0.5s;
     transition: background-color 0.5s, color 0.5s;
 }
+
 .btn-cust:hover {
     background-color: $green;
     color: $offwhite;
 }
+
 .btn-cust:focus {
     border: 0.2rem solid $green;
 }

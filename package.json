@@ -33,7 +33,7 @@
     "eject": "react-scripts eject",
     "lambda-serve": "netlify-lambda serve lambda-src",
     "lambda-build": "netlify-lambda build lambda-src",
-    "dev": "NODE_ENV=development concurrently \"webpack-dev-server --content-base dist/\" \"npm run lambda-serve\"",
+    "dev": "NODE_ENV=development concurrently \"webpack-dev-server --content-base dist/\" \"npm run lambda-serve\" \"webpack --watch\"",
     "build": "NODE_ENV=production webpack && npm run lambda-build",
     "watch": "webpack --watch"
   },
