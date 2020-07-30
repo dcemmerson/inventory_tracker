@@ -15,8 +15,8 @@ module.exports = [
             },
         },
         name: 'js',
-        mode: 'production',
-//        mode: 'development',
+//        mode: 'production',
+        mode: 'development',
         resolve: {
             alias: {
                 Img: path.resolve(__dirname, 'src/common/img'),
@@ -27,7 +27,7 @@ module.exports = [
             index: ['./src/index.jsx'],
 
         },
-//        devtool: 'inline-source-map',
+        devtool: 'inline-source-map',
         plugins: [
             //            new CleanWebpackPlugin(),
         ],
