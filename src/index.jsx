@@ -17,7 +17,8 @@ import './images/user.svg';
 import './scss/index.scss';
 import App from './App.jsx';
 
-const URL = 'https://skyeparker.netlify.app/'
+
+const URL = process.env.NETLIFY_URL
 
 ReactDOM.render(
   <React.StrictMode>
