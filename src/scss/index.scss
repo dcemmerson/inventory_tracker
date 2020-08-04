@@ -1,293 +1,300 @@
 /// filename: login.scss
 /// last modified: 07/30/2020
-/// description: Styles used for styling app, specifically 
+/// description: Styles used for styling app, specifically
 ///     pertaining to inventory table and not login.
 
 $green: #5ac84d;
 $gray: #383838;
 $offwhite: #f0f0f0;
 $danger: #820000;
-
+$twentyOrLessDays: #e6e600;
+$tenOrLessDays: #e63900;
 
 body {
-    font-family: 'Inconsolata', monospace;
+  font-family: "Inconsolata", monospace;
 
-    #root {
-        background-color: $gray;
-        min-height: 100vh;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
+  #root {
+    background-color: $gray;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 
-        .loadingMessage {
-            color: $green;
-            background-color: $gray;
-            box-shadow: 0 0 10px #222222;
-            padding: 1.5rem;
-        }
-
-        .tableContainer {
-            .tableCover {
-                position: absolute;
-                background-color: rgba(0, 0, 0, 0.9);
-                width: 0%;
-                height: 100%;
-                transition: width 0.3s;
-            }
-            table {
-                width: 100%;
-                max-width: 1200px;
-                text-align: center;
-                color: $green;
-                background-color: $gray;
-                th {
-                    font-weight: 650;
-                    padding: 0.35rem;
-                }
-                td {
-                    padding: 0.25rem;
-                    transition: display 1s;
-                    font-weight: 500;
-                }
-                .input {
-                    max-width: 20vw;
-                }
-                @media (min-width: 760px) and (max-width: 992px) {
-                    .input.daysLeft {
-                        max-width: 10vw;
-                    }
-                }
-                @media (max-width: 760px) {
-                    .input.daysLeft {
-                        display: none;
-                    }
-                }
-            }
-            .deletedRow {
-                background-color: $danger;
-            }
-
-        }
-
-        .spinner-sm {
-            font-size: 0.7rem;
-            width: 1rem;
-            height: 1rem;
-        }
-        .spinner-md {
-            width: 1.5rem;
-            height: 1.5rem;
-        }
+    .loadingMessage {
+      color: $green;
+      background-color: $gray;
+      box-shadow: 0 0 10px #222222;
+      padding: 1.5rem;
     }
+
+    .tableContainer {
+      .tableCover {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.9);
+        width: 0%;
+        height: 100%;
+        transition: width 0.3s;
+      }
+      table {
+        font-size: 1.25rem;
+        width: 100%;
+        max-width: 1200px;
+        text-align: center;
+        color: $green;
+        background-color: $gray;
+        th {
+          font-weight: 650;
+          padding: 0.35rem;
+        }
+        td {
+          padding: 0.25rem;
+          transition: display 1s;
+          font-weight: 500;
+        }
+        .input {
+          max-width: 20vw;
+        }
+        @media (min-width: 760px) and (max-width: 992px) {
+          .input.daysLeft {
+            max-width: 10vw;
+          }
+        }
+        @media (max-width: 760px) {
+          .input.daysLeft {
+            display: none;
+          }
+        }
+      }
+      .deletedRow {
+        background-color: $danger;
+      }
+      .tenOrLessDays {
+        background-color: $tenOrLessDays;
+      }
+      .twentyOrLessDays {
+        background-color: $twentyOrLessDays;
+      }
+    }
+
+    .spinner-sm {
+      font-size: 0.7rem;
+      width: 1rem;
+      height: 1rem;
+    }
+    .spinner-md {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
 }
 
 .sort::after {
-    content: "";
+  content: "";
 
-    background-image: url(../images/sort.png);
-    background-position: center;
-    background-size: 85%;
-    background-repeat: no-repeat;
+  background-image: url(../images/sort.png);
+  background-position: center;
+  background-size: 85%;
+  background-repeat: no-repeat;
 
-    width: 0.85rem;
-    height: 0.85rem;
-    display: inline-block;
-    position: relative;
-    left: 0.5rem;
-    opacity: 0%;
-    transition: opacity 1s;
+  width: 0.85rem;
+  height: 0.85rem;
+  display: inline-block;
+  position: relative;
+  left: 0.5rem;
+  opacity: 0%;
+  transition: opacity 1s;
 }
 
 .sort--up::after {
-    content: "";
+  content: "";
 
-    background-image: url(../images/sort--up.png);
-    background-position: center;
-    background-size: 85%;
-    background-repeat: no-repeat;
+  background-image: url(../images/sort--up.png);
+  background-position: center;
+  background-size: 85%;
+  background-repeat: no-repeat;
 
-    width: 0.85rem;
-    height: 0.85rem;
-    display: inline-block;
-    position: relative;
-    left: 0.5rem;
-    opacity: 0%;
-    transition: opacity 1s;
+  width: 0.85rem;
+  height: 0.85rem;
+  display: inline-block;
+  position: relative;
+  left: 0.5rem;
+  opacity: 0%;
+  transition: opacity 1s;
 }
 
 .sort--down::after {
-    content: "";
+  content: "";
 
-    background-image: url(../images/sort--down.png);
-    background-position: center;
-    background-size: 85%;
-    background-repeat: no-repeat;
+  background-image: url(../images/sort--down.png);
+  background-position: center;
+  background-size: 85%;
+  background-repeat: no-repeat;
 
-    width: 0.85rem;
-    height: 0.85rem;
-    display: inline-block;
-    position: relative;
-    left: 0.5rem;
-    opacity: 0%;
-    transition: opacity 1s;
+  width: 0.85rem;
+  height: 0.85rem;
+  display: inline-block;
+  position: relative;
+  left: 0.5rem;
+  opacity: 0%;
+  transition: opacity 1s;
 }
 
 .addItemRow::before {
-    content: "";
-    background-image: url(../images/plus--green.png);
-    background-position: center;
-    background-size: 95%;
-    background-repeat: no-repeat;
+  content: "";
+  background-image: url(../images/plus--green.png);
+  background-position: center;
+  background-size: 95%;
+  background-repeat: no-repeat;
 
-    width: 0.85rem;
-    height: 0.85rem;
-    display: inline-block;
-    position: relative;
-    opacity: 0%;
-    transition: opacity 1s;
+  width: 0.85rem;
+  height: 0.85rem;
+  display: inline-block;
+  position: relative;
+  opacity: 0%;
+  transition: opacity 1s;
 }
 
 .deleteItemRow::before {
-    content: "";
+  content: "";
 
-    background-image: url(../images/trash--red.png);
-    background-position: center;
-    background-size: 85%;
-    background-repeat: no-repeat;
+  background-image: url(../images/trash--red.png);
+  background-position: center;
+  background-size: 85%;
+  background-repeat: no-repeat;
 
-    width: 1.2rem;
-    height: 1.2rem;
-    position: absolute;
-    margin-top: 0.3rem;
-    opacity: 100%;
-    transition: opacity 1s, right 0.5s, left 0.5s;
+  width: 1.2rem;
+  height: 1.2rem;
+  position: absolute;
+  margin-top: 0.3rem;
+  opacity: 100%;
+  transition: opacity 1s, right 0.5s, left 0.5s;
 }
 
-// Media queries pertaining to placement of delete row 
+// Media queries pertaining to placement of delete row
 // icon button.
 @media (max-width: 600px) {
-    .deleteItemRow::before {
-        right: 3rem;
-    }
+  .deleteItemRow::before {
+    right: 3rem;
+  }
 }
 
 @media (max-width: 760px) {
-    .deleteItemRow::before {
-        right: 4rem;
-    }
+  .deleteItemRow::before {
+    right: 4rem;
+  }
 }
 
 @media (min-width: 760px) and (max-width: 992px) {
-    .deleteItemRow::before {
-        left: 1.2rem;
-    }
+  .deleteItemRow::before {
+    left: 1.2rem;
+  }
 }
 
 @media (min-width: 992px) {
-    .deleteItemRow::before {
-        left: -0.8rem;
-    }
+  .deleteItemRow::before {
+    left: -0.8rem;
+  }
 }
 
 .sort:hover {
-    cursor: pointer;
-    opacity: 50%;
-    transition: opacity 0.25s;
+  cursor: pointer;
+  opacity: 50%;
+  transition: opacity 0.25s;
 }
 .sort--down:hover {
-    cursor: pointer;
-    opacity: 50%;
-    transition: opacity 0.25s;
+  cursor: pointer;
+  opacity: 50%;
+  transition: opacity 0.25s;
 }
 .sort--up:hover {
-    cursor: pointer;
-    opacity: 50%;
-    transition: opacity 0.25s;
+  cursor: pointer;
+  opacity: 50%;
+  transition: opacity 0.25s;
 }
 .addItemRow:hover {
-    cursor: pointer;
-    opacity: 50%;
-    transition: opacity 0.25s;
+  cursor: pointer;
+  opacity: 50%;
+  transition: opacity 0.25s;
 }
 .deleteItemRow:hover::before,
 .deleteItemRowMobile:hover {
-    cursor: pointer;
-    opacity: 50%;
-    transition: opacity 0.25s;
+  cursor: pointer;
+  opacity: 50%;
+  transition: opacity 0.25s;
 }
 
 .tableContainer:hover {
-    .sort::after {
-        opacity: 100%;
-    }
-    .sort--up::after {
-        opacity: 100%;
-    }
-    .sort--down::after {
-        opacity: 100%;
-    }
-    .addItemRow::before {
-        opacity: 100%;
-    }
+  .sort::after {
+    opacity: 100%;
+  }
+  .sort--up::after {
+    opacity: 100%;
+  }
+  .sort--down::after {
+    opacity: 100%;
+  }
+  .addItemRow::before {
+    opacity: 100%;
+  }
 }
 .loginButtonContainer:hover {
-    .btn-cust.logout {
-        opacity: 100%;
-    }
+  .btn-cust.logout {
+    opacity: 100%;
+  }
 }
 .btn-cust.logout {
-    opacity: 0%;
-    transition: opacity 1s;
+  opacity: 0%;
+  transition: opacity 1s;
 }
-.btn-cust{
-    color: $green;
-    background-color: rgba(0, 0, 0, 0);
-    font-weight: 550;
-    border: 0.15rem solid $green;
-    border-radius: 2.5px;
-    transition: background-color 0.5s, color 0.5s;
+.btn-cust {
+  color: $green;
+  background-color: rgba(0, 0, 0, 0);
+  font-weight: 550;
+  border: 0.15rem solid $green;
+  border-radius: 2.5px;
+  transition: background-color 0.5s, color 0.5s;
 }
 .btn-cust:hover {
-    background-color: $green;
-    color: $offwhite;
+  background-color: $green;
+  color: $offwhite;
 }
 .btn-cust:focus {
-    border: 0.2rem solid $green;
+  border: 0.2rem solid $green;
 }
 .userActionRequired {
-    animation: blinking 3s linear infinite;
-    animation-delay: 2s;
+  animation: blinking 3s linear infinite;
+  animation-delay: 2s;
 }
 .w-100 {
-    width: 100%;
+  width: 100%;
 }
 .w-0 {
-    width: 0%;
+  width: 0%;
 }
 .h-100 {
-    height: 100%;
+  height: 100%;
 }
 .h-0 {
-    height: 0%;
+  height: 0%;
 }
 
 // Used when deletes a row but hasn't saved the deletion (to prevent
 // user from accidentally making breaking changes).
 @keyframes blinking {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 25%;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 25%;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .btn:focus {
-    box-shadow: 0 0 0 0.2rem rgba($green, 0.25) !important;
+  box-shadow: 0 0 0 0.2rem rgba($green, 0.25) !important;
 }
 
 input:focus {
-    box-shadow: 0 0 0 0.2rem rgba($green, 0.25) !important;
+  box-shadow: 0 0 0 0.2rem rgba($green, 0.25) !important;
 }

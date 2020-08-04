@@ -7,6 +7,9 @@ import React from 'react';
 import { useIdentityContext } from "react-netlify-identity";
 
 export function Inventory(props) {
+  const ELEVEN = 11;
+  const TWENTYONE = 21;
+
 	const identity = useIdentityContext();
 	const isLoggedIn = identity && identity.isLoggedIn;
 
@@ -42,7 +45,11 @@ export function Inventory(props) {
 											if (item.editMode) {
 												showSaveButton = true;
 												return (
-													<tr key={item.data.id} className={item.deleteItem ? "deletedRow" : ""}>
+                          <tr key={item.data.id} className={
+                            item.deleteItem ? "deletedRow"
+                          : item.data.daysLeft < ELEVEN ? "tenOrLessDays"
+                          : item.data.daysLeft < TWENTYONE ? "twentyOrLessDays"
+                          : ""}>
 														<td><span className="deleteItemRow" onClick={() => props.removeItemRow(item.data.id)}></span>
 															<input className="input" name="quantity" value={item.data.quantity} type="number"
 																onChange={e => props.handleNumericInput(item.data.id, e)}
@@ -62,7 +69,11 @@ export function Inventory(props) {
 											}
 											else {
 												return (
-													<tr key={item.data.id} className={item.deleteItem ? "deletedRow" : ""}
+                          <tr key={item.data.id} className={
+                              item.deleteItem ? "deletedRow"
+                            : item.data.daysLeft < ELEVEN ? "tenOrLessDays"
+                            : item.data.daysLeft < TWENTYONE ? "twentyOrLessDays"
+                            : ""}
 														onClick={() => props.setItemEditMode(item.data.id)}
 													>
 														<td>{item.data.quantity}</td>

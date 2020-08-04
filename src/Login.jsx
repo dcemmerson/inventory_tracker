@@ -33,6 +33,7 @@ export function Login(props) {
       .then(results => {
         setInvalidSignUp({ error: false, message: "" });
         setInvalidLogin({ error: false, message: "" });
+        $('#loginModal').modal('hide');
       })
       .catch(err => {
         setInvalidLogin({ error: true, message: err.message });
@@ -203,7 +204,7 @@ export function Login(props) {
     return (
       <>
         <div className="mt-3 ml-4 loginButtonContainer">
-          <button className={"btn btn-sm btn-cust" + (props.loggedIn ? " logout" : "")}
+          <button className={"btn btn-sm btn-cust" + (isLoggedIn ? " logout" : "")}
             data-toggle="modal" data-target="#loginModal">
             {isLoggedIn ? "LOG OUT" : "LOG IN"}
           </button>
@@ -239,4 +240,3 @@ export function Login(props) {
   }
 
 }
-//disabled={submitting ? "true" : "false"}

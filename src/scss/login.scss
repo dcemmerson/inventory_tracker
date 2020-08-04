@@ -80,9 +80,12 @@ button:focus {
     }
 }
 
-.btn-cust.logout {
+.loginButtonContainer {
+  .btn-cust.logout {
     opacity: 0%;
     transition: opacity 1s;
+
+  }
 }
 
 .btn-cust{
@@ -93,10 +96,9 @@ button:focus {
     border-radius: 2.5px;
     transition: background-color 0.5s, color 0.5s;
 }
-
 .btn-cust:hover {
-    background-color: $green;
-    color: $offwhite;
+  background-color: $green;
+  color: $offwhite;
 }
 
 .btn-cust:focus {
