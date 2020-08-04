@@ -18,7 +18,7 @@ import './scss/index.scss';
 import App from './App.jsx';
 
 
-const URL = process.env.NETLIFY_URL
+const URL = 'https://skyeparker.netlify.app/';
 
 ReactDOM.render(
   <React.StrictMode>
