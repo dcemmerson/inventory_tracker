@@ -33,6 +33,7 @@ export function Login(props) {
       .then(results => {
         setInvalidSignUp({ error: false, message: "" });
         setInvalidLogin({ error: false, message: "" });
+        // eslint-disable-next-line no-undef
         $('#loginModal').modal('hide');
       })
       .catch(err => {
@@ -232,6 +233,7 @@ export function Login(props) {
       </>
     );
   }
+
   if (isLoggedIn) {
     return logoutOptions();
   }
