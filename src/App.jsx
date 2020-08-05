@@ -133,7 +133,7 @@ export default function App(props) {
 		setSaving(true);
 		setUserEditing(false);
 
-		updateInventory(inventory, identity.user.token.access_token)
+		updateInventory(inventory)
 			.then(updatedInventory => {
 				setInventory(updatedInventory);
 				setPrevInventory(deepCopy(updatedInventory));
@@ -239,10 +239,9 @@ export default function App(props) {
 	}
 
 	/// name: getInventory
-	/// arguments: token - json when token obtained when logging in
 	/// description: Perform actual fetch request to FaunaDB (through
 	///   Netlify) for item inventory. Must be logged in for success.
-	async function getInventory(token) {
+	async function getInventory() {
 		if (isLoggedIn) {
       const refreshToken = await identity.getFreshJWT();
 			return fetch(`/.netlify/functions/get_inventory`, {
@@ -279,16 +278,15 @@ export default function App(props) {
 	/// name: updateInventory
 	/// arguments:  edittedInventory is just inventory list we need
 	///               to sync to database.
-	///             token is json web token which is obtained from
-	///             Netlify when logging in.
 	/// description: Perform db update request. Must be logged in.
-	function updateInventory(edittedInventory, token) {
+	async function updateInventory(edittedInventory) {
 		if (isLoggedIn) {
+      const refreshToken = await identity.getFreshJWT();
 			return fetch(`/.netlify/functions/update_inventory`, {
 				method: 'POST',
 				cache: "no-store",
 				headers: {
-					Authorization: `Bearer ${token}`,
+					Authorization: `Bearer ${refreshToken}`,
 				},
 				body: JSON.stringify(edittedInventory),
 			})
@@ -326,7 +324,7 @@ export default function App(props) {
 				window.clearTimeout(timer);
 			}
 			setUpdating(true);
-			getInventory(identity.user.token.access_token)
+			getInventory()
 				.then(inventory => {
 					if (inventory.loggedIn === false) { //check for false, not just truthiness.
 						identity.logoutUser();
