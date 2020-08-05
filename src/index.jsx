@@ -4,7 +4,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { IdentityContextProvider } from "react-netlify-identity"
+import { IdentityContextProvider } from "react-netlify-identity";
 
 import './images/plus--green.png';
 import './images/sort--down.png';
@@ -30,36 +30,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-/// name: fullScreen
-/// description: Callback method to enter full screen when
-///   user double clicks on/around inventory table.
-function fullScreen() {
-  const main = document.getElementById('main');
-  const isInFullScreen = document.fullscreen;
-  if (!isInFullScreen) {
-    if (main.requestFullscreen) {
-      main.requestFullscreen();
-    } else if (main.mozRequestFullScreen) {
-      main.mozRequestFullScreen();
-    } else if (this.webkitRequestFullScreen) {
-      main.webkitRequestFullScreen();
-    } else if (main.msRequestFullscreen) {
-      main.msRequestFullscreen();
-    }
-  } else {
-    if (main.exitFullscreen) {
-      main.exitFullscreen();
-    } else if (main.webkitExitFullscreen) {
-      main.webkitExitFullscreen();
-    } else if (main.mozCancelFullScreen) {
-      main.mozCancelFullScreen();
-    } else if (main.msExitFullscreen) {
-      main.msExitFullscreen();
-    }
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('main').addEventListener('dblclick', fullScreen);
-})
