@@ -7,7 +7,7 @@ $green: #5ac84d;
 $gray: #383838;
 $offwhite: #f0f0f0;
 $danger: #820000;
-$twentyOrLessDays: #e6e600;
+$twentyOrLessDays: #e5cd00;
 $tenOrLessDays: #e63900;
 
 body {
@@ -68,10 +68,10 @@ body {
         background-color: $danger;
       }
       .tenOrLessDays {
-        background-color: $tenOrLessDays;
+        color: $tenOrLessDays;
       }
       .twentyOrLessDays {
-        background-color: $twentyOrLessDays;
+        color: $twentyOrLessDays;
       }
     }
 

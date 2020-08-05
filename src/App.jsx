@@ -211,7 +211,10 @@ export default function App(props) {
 			throw new Error(`No inventory.data: ${inv.msg}`);
 		}
 		inv.data = inv.data.map(item => {
-			item.data.daysLeft = (item.data.quantity / item.data.burnRate).toFixed(1);
+      item.data.quantity = parseFloat(parseFloat(item.data.quantity).toFixed(2));
+      item.data.burnRate = parseFloat(parseFloat(item.data.burnRate).toFixed(4));
+      item.data.daysLeft = parseFloat(
+        (parseFloat(item.data.quantity) / parseFloat(item.data.burnRate)).toFixed(1));
 			item.editMode = false;
 			return item;
 		})
@@ -334,7 +337,6 @@ export default function App(props) {
 					setPrevInventory(deepCopy(inventory));
 
 					setTimer(createFetchTimer());
-					console.log(new Date());
 				})
 				.catch(err => {
 					console.log(err);
