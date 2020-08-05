@@ -1,6 +1,6 @@
 /// filename: App.jsx
 /// last modified: 07/30/2020
-/// description: Top level component which deals with fetching 
+/// description: Top level component which deals with fetching
 ///   and updating inventory appropriately as well as ensuring
 ///   user is logged in and not the view of the app.
 
@@ -27,7 +27,7 @@ export default function App(props) {
 	const [loading, setLoading] = useState(true);
 	//State when we make timed interval request to retrieve updates form server.
 	const [updating, setUpdating] = useState(false);
-	//State when user selects save button and we send updated inventory to server, but before we hear back from server.     
+	//State when user selects save button and we send updated inventory to server, but before we hear back from server.
 	const [saving, setSaving] = useState(false);
 	//State when user is actively editing inventory in table.
 	const [userEditing, setUserEditing] = useState(false);
@@ -59,8 +59,8 @@ export default function App(props) {
 	/// arguments: changeToSort - String representing user chosen sort choice.
 	/// description: This function is called upon user clicking sort icon
 	///   on table header column. Determine which sort method user wants
-	///   and sort, then update state. If user already chose to sort by 
-	///   said column, then 
+	///   and sort, then update state. If user already chose to sort by
+	///   said column, then
 	function sortItems(changeToSort) {
 		if (sortBy === changeToSort) {
 			setSortAsc(!sortAsc)
@@ -173,7 +173,7 @@ export default function App(props) {
 	/// name: removeItemRow
 	/// arguments: id - int representing item id in DB
 	/// description: Triggered when user deletes row from inventory
-	///   table. This method does not update db, but does update 
+	///   table. This method does not update db, but does update
 	///   the inventory state.
 	function removeItemRow(id) {
 		let newInventory = deepCopy(inventory);
@@ -242,13 +242,14 @@ export default function App(props) {
 	/// arguments: token - json when token obtained when logging in
 	/// description: Perform actual fetch request to FaunaDB (through
 	///   Netlify) for item inventory. Must be logged in for success.
-	function getInventory(token) {
+	async function getInventory(token) {
 		if (isLoggedIn) {
+      const refreshToken = await identity.getFreshJWT();
 			return fetch(`/.netlify/functions/get_inventory`, {
 				method: 'GET',
 				cache: "no-store",
 				headers: {
-					Authorization: `Bearer ${token}`,
+					Authorization: `Bearer ${refreshToken}`,
 				}
 			})
 				.then(res => res.json())
@@ -276,7 +277,7 @@ export default function App(props) {
 	}
 
 	/// name: updateInventory
-	/// arguments:  edittedInventory is just inventory list we need 
+	/// arguments:  edittedInventory is just inventory list we need
 	///               to sync to database.
 	///             token is json web token which is obtained from
 	///             Netlify when logging in.
@@ -309,7 +310,7 @@ export default function App(props) {
 	/// name: fetchInventory
 	/// arguments: isUserEditing/isUpdating represent state of inventory table
 	///             maintained here in this component.
-	/// description: Setup fetch request to FaunaDB (through Netlify) for 
+	/// description: Setup fetch request to FaunaDB (through Netlify) for
 	///   item inventory. If using is editing table when this method is called,
 	///   we will defer the fetch request.
 	function fetchInventory(isUserEditing = false, isUpdating) {
