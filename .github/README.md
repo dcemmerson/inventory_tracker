@@ -17,7 +17,7 @@ To run locally, you will need NPM, which is included with NodeJS and can be down
 
 1. Clone this repository  
 2. Run `npm install` from the root directory  
-3. Create a .env file in the root directory containing the following:  
+3. Create a .env file in the root directory containing the following:<br><br>
     DB_SERVER_KEY = yourFaunaDbServerKey<br>
     NETLIFY_URL = yourNewlyCreatedNetlifyUrl<br><br>
 (I recommend copying these environment variables into your Netlify instance environment variables as well right now:  Settings -> Build & Deploy -> Environment)  
