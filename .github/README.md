@@ -18,8 +18,8 @@ To run locally, you will need NPM, which is included with NodeJS and can be down
 1. Clone this repository  
 2. Run `npm install` from the root directory  
 3. Create a .env file in the root directory containing the following:  
-    DB_SERVER_KEY = yourFaunaDbServerKey
-    NETLIFY_URL = yourNewlyCreatedNetlifyUrl  
+    DB_SERVER_KEY = yourFaunaDbServerKey<br>
+    NETLIFY_URL = yourNewlyCreatedNetlifyUrl<br><br>
 (I recommend copying these environment variables into your Netlify instance environment variables as well right now:  Settings -> Build & Deploy -> Environment)  
 4. Run `npm run dev` to start up the local development server. The app will now be available at [localhost:8080](http://localhost:8080/).   
 Note that database API requests are being proxied through localhost:9000 when running locally.
