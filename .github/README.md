@@ -3,6 +3,7 @@ Inventory Tracker App
 
 About
 ------------
+
 ### Technologies
 This app was built using the following tools and technologies (among others):  
 
@@ -10,6 +11,11 @@ This app was built using the following tools and technologies (among others):
 * FaunaDB Serverless Database
 * ReactJS
 * Webpack
+
+Why
+---
+I built this for a friend who wanted a small web app to keep track of their medical inventory.<br><br>After entering items into the inventory list, with a corresponding quantity and burn rate (quantity per day), days left will automatically be calculated. Additionally, quantity remaining will automatically be updated every 24 hours for this item, until quantity remaing equal 0, or
+user updates quantity for this item, at which point process kicks off again.
 
 Run it locally
 --------------
@@ -28,9 +34,7 @@ Try it out
 ----------
 A functionally limited demo version is hosted at [skyeparker.netlify.app](https://skyeparker.netlify.app).
 
-Why
----
-I built this for a friend who wanted a small app to keep track of their medical inventory.
+
 
 Demo
 ----
