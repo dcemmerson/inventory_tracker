@@ -18,7 +18,7 @@ import './scss/index.scss';
 import App from './App.jsx';
 
 
-const URL = 'https://skyeparker.netlify.app/';
+const URL = 'https://trackmyinventory.netlify.app/';
 
 ReactDOM.render(
   <React.StrictMode>
