@@ -237,7 +237,7 @@ export function Login(props) {
   }
 
   setTimeout(() => {
-    if(!props.loggedIn) {
+    if(props.loggedIn === false) {
       console.log('calling modal show');
       $('#loginModal').modal('show');
     }

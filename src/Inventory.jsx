@@ -39,9 +39,6 @@ export function Inventory(props) {
 								<tbody>
 									{
 										props.inventory.map(item => {
-                      console.log('qty: ' + item.data.quantity);
-                      console.log('daysLeft: ' + item.data.daysLeft);
-
 											if (item.deleteItem) {
 												itemInLimbo = true;
 											}
