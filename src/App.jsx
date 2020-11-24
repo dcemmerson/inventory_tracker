@@ -295,7 +295,6 @@ export default function App(props) {
 			})
 				.then(res => res.json())
 				.then(results => {
-					console.log(results);
 					if (!results.success) {
 						throw new Error(results.error);
 					}
