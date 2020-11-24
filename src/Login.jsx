@@ -107,7 +107,7 @@ export function Login(props) {
     return (
       <>
         <div className="mt-3 ml-4 loginButtonContainer">
-          <button className={"btn btn-sm btn-cust" + (props.loggedIn ? " logout" : "")}
+          <button className={"btn btn-sm btn-cust opacity0" + (props.loggedIn ? " logout" : "")}
             data-toggle="modal" data-target="#loginModal">
             {isLoggedIn ? "LOG OUT" : "LOG IN"}
           </button>
@@ -132,6 +132,7 @@ export function Login(props) {
                 <div className="tab-content" id="myTabContent">
                   <div className="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
                     <div className={"alert alert-danger" + (invalidLogin.error ? " d-block" : " d-none")}>{invalidLogin.message}</div>
+                    <div>DEMO VERSION - use test@test.com/password</div>
                     <form>
                       <label htmlFor="email" className="sr-only">Email</label>
                       <div className="input-group mb-3">
@@ -159,6 +160,7 @@ export function Login(props) {
                   </div>
                   <div className="tab-pane fade" id="signUp" role="tabpanel" aria-labelledby="signUp-tab">
                     <div className={"alert alert-danger" + (invalidSignUp.error ? " d-block" : " d-none")}>{invalidSignUp.message}</div>
+                    <div>DEMO VERSION - sign up disabled</div>
                     <form>
                       <label htmlFor="name" className="sr-only">Name</label>
                       <div className="input-group mb-3">
@@ -234,6 +236,11 @@ export function Login(props) {
     );
   }
 
+  setTimeout(() => {
+    if(!props.loggedIn) {
+      $('#loginModal').modal('show');
+    }
+  }, 30);
   if (isLoggedIn) {
     return logoutOptions();
   }
