@@ -30,7 +30,7 @@ Note that database API requests are being proxied through localhost:9000 when ru
 
 Try it out
 ----------
-A functionally limited demo version is hosted at [skyeparker.netlify.app](https://skyeparker.netlify.app).
+A functionally limited demo version is hosted at [TrackMyInventory.netlify.app](https://TrackMyInventory.netlify.app).
 
 
 
