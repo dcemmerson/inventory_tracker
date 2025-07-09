@@ -260,7 +260,7 @@ export default function App(props) {
 						identity.logoutUser();
 						throw new Error(results);
 					}
-					return results;
+					return results.inventory;
 				})
 				.then(normalizeInventoryData)
 				.then(normalizedInventory => {
@@ -283,22 +283,24 @@ export default function App(props) {
 	///               to sync to database.
 	/// description: Perform db update request. Must be logged in.
 	async function updateInventory(edittedInventory) {
+		const filteredInventory = edittedInventory.filter(i => !i.deleteItem);
+
 		if (isLoggedIn) {
-      const refreshToken = await identity.getFreshJWT();
+			const refreshToken = await identity.getFreshJWT();
 			return fetch(`/.netlify/functions/update_inventory`, {
 				method: 'POST',
 				cache: "no-store",
 				headers: {
 					Authorization: `Bearer ${refreshToken}`,
 				},
-				body: JSON.stringify(edittedInventory),
+				body: JSON.stringify(filteredInventory),
 			})
 				.then(res => res.json())
 				.then(results => {
 					if (!results.success) {
 						throw new Error(results.error);
 					}
-					return results;
+					return results.inventory;
 				})
 				.then(normalizeInventoryData)
 				.catch(err => {

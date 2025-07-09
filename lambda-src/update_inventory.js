@@ -31,7 +31,7 @@ exports.handler = async function (event, context) {
     return {
       statusCode,
       headers,
-      body: JSON.stringify(inventoryDb),
+      body: JSON.stringify({success: true, inventory: inventoryDb}),
     };
   } catch (err) {
     return {

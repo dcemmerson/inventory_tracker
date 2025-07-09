@@ -1,4 +1,4 @@
-import { insertItem } from "./db";
+import { getInventory, insertItem } from "./db";
 
 const statusCode = 200;
 const headers = {
@@ -24,10 +24,12 @@ exports.handler = async function (event, context) {
     const data = JSON.parse(event.body)
     await insertItem(user, data);
 
+    const inventory = await getInventory(user);
+
     return {
       statusCode,
       headers,
-      body: JSON.stringify({ success: true }),
+      body: JSON.stringify({ inventory, success: true }),
     };
   } catch (err) {
     return {

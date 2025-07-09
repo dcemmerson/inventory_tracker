@@ -9,7 +9,6 @@ const headers = {
 exports.handler = async function (event, context) {
   const { user } = context.clientContext;
 
-  let results;
 
   if (!user) {
     return {
@@ -24,11 +23,11 @@ exports.handler = async function (event, context) {
   }
 
   try {
-    results = await tallyInventory(user, await getInventory(user));
+    const inventory = await tallyInventory(user, await getInventory(user));
     return {
       statusCode,
       headers,
-      body: JSON.stringify(results),
+      body: JSON.stringify({success: true, inventory}),
     };
   } catch (err) {
     return {
