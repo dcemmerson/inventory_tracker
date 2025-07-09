@@ -1,7 +1,5 @@
 import { getInventory, tallyInventory } from "./db";
 
-require("dotenv").config();
-
 const statusCode = 200;
 const headers = {
   "Access-Control-Allow-Origin": "*",
@@ -33,7 +31,6 @@ exports.handler = async function (event, context) {
       body: JSON.stringify(results),
     };
   } catch (err) {
-    results = err;
     return {
       statusCode: 500,
       headers,

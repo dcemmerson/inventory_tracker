@@ -1,10 +1,14 @@
-const { google } = require("googleapis");
-const { GoogleAuth } = require("google-auth-library");
+import { google } from "googleapis";
+import { GoogleAuth } from "google-auth-library";
+import "dotenv/config";
 
 const SHEET_ID = "1xZ4_VnnvQJsboGaV92pNLsZfl6dUk7WCssr2uYkkpuU";
 
 export async function getSheetsClient() {
+  const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
+
   const auth = new GoogleAuth({
+    credentials,
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
   });
 

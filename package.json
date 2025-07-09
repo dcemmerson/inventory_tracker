@@ -8,6 +8,7 @@
     "autoprefixer": "^9.8.5",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.6.0",
+    "dotenv": "^17.1.0",
     "encoding": "^0.1.13",
     "file-loader": "^6.0.0",
     "google-auth-library": "^7.14.1",

@@ -1,7 +1,5 @@
 import { insertItem } from "./db";
 
-require("dotenv").config();
-
 const statusCode = 200;
 const headers = {
   "Access-Control-Allow-Origin": "*",
