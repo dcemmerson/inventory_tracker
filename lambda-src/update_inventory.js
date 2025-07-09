@@ -39,7 +39,10 @@ exports.handler = async function (event, context) {
     return {
       success: false,
       loggedIn: true,
-      error: err.toString(),
+      body: JSON.stringify({
+        success: false,
+        msg: err.toString(),
+      }),
     };
   }
 };

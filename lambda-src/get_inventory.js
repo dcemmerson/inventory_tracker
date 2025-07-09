@@ -27,14 +27,21 @@ exports.handler = async function (event, context) {
 
   try {
     results = await tallyInventory(user, await getInventory(user));
-  } catch (err) {
-    results = err;
-  } finally {
     return {
       statusCode,
       headers,
       body: JSON.stringify(results),
     };
+  } catch (err) {
+    results = err;
+    console.error(err);
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        msg: err.toString(),
+      }),
+    };
   }
 };
-
