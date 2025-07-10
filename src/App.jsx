@@ -42,6 +42,18 @@ export default function App(props) {
 	const updatingRef = React.useRef(updating);
 	updatingRef.current = updating;
 
+	useEffect(() => {
+		const hash = window.location.hash;
+		if (hash.includes("invite_token")) {
+		  identity.verifyToken().then(user => {
+			if (user) {
+				console.log("✅ Invite accepted, user is now confirmed");
+			} else {
+				console.warn("❌ Could not accept invite token.");
+			}
+		  });
+		}
+	}, [identity]);
 
 	useEffect(() => {
 		fetchInventory();
